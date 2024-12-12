@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rotary_flutter/util/global_color.dart';
+import 'package:rotary_flutter/util/main_router.dart';
 
 import 'feature/home/home_main_screen.dart';
+import 'feature/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: MyApp())); // MyApp
 }
 
 class MyApp extends StatelessWidget {
@@ -32,12 +37,39 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final GoRouter _router = GoRouter(
+    initialLocation: '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        routes: [...mainRouter],
+        builder: (context, state) => HomeScreen(),
+      )
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body:  HomeMainScreen()
+    return MaterialApp.router(
+      routerConfig: _router,
+      debugShowCheckedModeBanner: false,
+      title: 'rotary',
+      theme: ThemeData(
+        primaryColor: GlobalColor.primaryColor,
+        appBarTheme: AppBarTheme(
+          foregroundColor: Colors.black,
+          elevation: 0.0,
+          backgroundColor: GlobalColor.white,
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: GlobalColor.primaryColor),
+        useMaterial3: false,
+      ),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(1.0),
+        ),
+        child: child!,
+      ),
     );
   }
 }
