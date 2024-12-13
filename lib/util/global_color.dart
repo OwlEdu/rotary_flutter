@@ -2,6 +2,7 @@ import 'dart:ui';
 
 class GlobalColor {
   static const Color primaryColor = Color(0xFF00438A);
+  static const Color lightPrimaryColor = Color(0xFF194C91);
   static const Color indexBoxColor = Color(0xFFF3F5F7);
 
   static const Color transparent = Color(0x00000000);

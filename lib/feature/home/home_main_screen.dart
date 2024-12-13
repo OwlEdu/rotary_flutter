@@ -97,7 +97,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
                   border: Border.all(
-                      color: GlobalColor.indexBoxColor.withOpacity(0.1)),
+                      color: GlobalColor.lightPrimaryColor),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
