@@ -63,7 +63,9 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: CustomScrollView(slivers: [
+        body: CustomScrollView(
+            physics: ClampingScrollPhysics(),
+            slivers: [
           SliverToBoxAdapter(
               child: Container(
                   width: double.infinity,
@@ -80,7 +82,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                       final bannerIndex = index % _banners.length;
                       return Image.asset(
                         _banners[bannerIndex],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       );
                     },
                   ))),
@@ -91,7 +93,11 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               // return Container(width: 50, height: 50,color: Colors.black,);
-              return Container(
+              return InkWell(
+                  onTap: (){
+                    menuItems[index].onTap();
+                  },
+                  child:Container(
                 decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
                   border: Border.all(
@@ -116,7 +122,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                     )
                   ],
                 ),
-              );
+              ));
             }, childCount: menuItems.length
                 // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 //   crossAxisCount: 3,
