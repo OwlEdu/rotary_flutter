@@ -15,11 +15,15 @@ class HomeMainScreen extends StatefulWidget {
 }
 
 class _HomeMainScreenState extends State<HomeMainScreen> {
-  final PageController _pageController = PageController(initialPage: 0); // 초기 페이지는 0으로 설정
+  final PageController _pageController =
+      PageController(initialPage: 0); // 초기 페이지는 0으로 설정
   Timer? _timer;
   int _currentPage = 0;
 
-  final _banners = ['asset/images/rotary_slide.png','asset/images/rotary_slide02.png'];
+  final _banners = [
+    'asset/images/rotary_slide.png',
+    'asset/images/rotary_slide02.png'
+  ];
 
   @override
   void initState() {
@@ -53,74 +57,69 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark
-        )
-    );
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark));
 
     return Scaffold(
-      backgroundColor: Colors.white,
-        body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-        width: double.infinity,
-          height: (MediaQuery.of(context).size.width) * 9 / 16,
-          child: PageView.builder(
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index; // 페이지 변경 시 currentPage 갱신
-              });
-            },
-            controller: _pageController,
-            itemCount: _banners.length,
-            itemBuilder: (context, index) {
-              final bannerIndex = index % _banners.length;
-              return Image.asset(
-                _banners[bannerIndex],
-                fit: BoxFit.fill,
-              );
-            },
-          ))),
+        backgroundColor: Colors.white,
+        body: CustomScrollView(slivers: [
+          SliverToBoxAdapter(
+              child: Container(
+                  width: double.infinity,
+                  height: (MediaQuery.of(context).size.width) * 9 / 16,
+                  child: PageView.builder(
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentPage = index; // 페이지 변경 시 currentPage 갱신
+                      });
+                    },
+                    controller: _pageController,
+                    itemCount: _banners.length,
+                    itemBuilder: (context, index) {
+                      final bannerIndex = index % _banners.length;
+                      return Image.asset(
+                        _banners[bannerIndex],
+                        fit: BoxFit.fill,
+                      );
+                    },
+                  ))),
           SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1.2,
                 mainAxisSpacing: 1,
-                crossAxisSpacing: 1
-              ),
-              delegate: SliverChildBuilderDelegate((BuildContext context,int index) {
-                // return Container(width: 50, height: 50,color: Colors.black,);
-                return Container(
+                crossAxisSpacing: 1),
+            delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              // return Container(width: 50, height: 50,color: Colors.black,);
+              return Container(
+                decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(
-                  //       color: GlobalColor.indexBoxColor.withOpacity(0.1)),
-                  // ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        menuItems[index].iconPath,
-                        color: GlobalColor.indexBoxColor,
-                                    width: width * 0.08,
-                                    height: width * 0.08,
-                                    ),
-                                    SizedBox(height: height * 0.01),
-                                    Text(
-                                    menuItems[index].label,
-                                    style: TextStyle(
-                                    color: GlobalColor.indexBoxColor,
-                                    fontSize: width * 0.035
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-                childCount: menuItems.length
+                  border: Border.all(
+                      color: GlobalColor.indexBoxColor.withOpacity(0.1)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      menuItems[index].iconPath,
+                      color: GlobalColor.indexBoxColor,
+                      width: width * 0.08,
+                      height: width * 0.08,
+                    ),
+                    SizedBox(height: height * 0.01),
+                    Text(
+                      menuItems[index].label,
+                      style: TextStyle(
+                          color: GlobalColor.indexBoxColor,
+                          fontSize: width * 0.035,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              );
+            }, childCount: menuItems.length
                 // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 //   crossAxisCount: 3,
                 //   childAspectRatio: 1.2,
@@ -128,8 +127,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 //   crossAxisSpacing: 1
                 // ),
 
-              ),
-            ),
-          ]));
+                ),
+          ),
+        ]));
   }
 }
