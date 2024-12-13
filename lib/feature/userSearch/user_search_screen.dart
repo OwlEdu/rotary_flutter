@@ -10,6 +10,18 @@ class UserSearchScreen extends StatefulWidget {
 class _UserSearchScreenState extends State<UserSearchScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.maxWidth;
+        final maxHeight = constraints.maxHeight;
+
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+
+          ),
+        );
+      },
+    );
   }
 }

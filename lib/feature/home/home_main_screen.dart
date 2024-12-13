@@ -107,7 +107,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               ],
             ),
           ),
-          SizedBox(height: height * 0.05),
+          SizedBox(height: height * 0.02),
           Expanded(
             child: Container(
               color: GlobalColor.primaryColor,
