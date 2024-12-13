@@ -36,6 +36,37 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
     ];
 
     return Scaffold(
+        appBar: AppBar(
+          title: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+              height: 50,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: GlobalColor.indexBoxColor,
+              ),
+              child:Row(children: [SvgPicture.asset(
+                height: 20,
+                'asset/images/main_logo.svg',
+                fit: BoxFit.contain,
+              )]))
+    ),
+        //   title:Row(
+        //   children: [
+        //     SvgPicture.asset(
+        //       height: 20,
+        //       'asset/images/main_logo.svg',
+        //       fit: BoxFit.contain,
+        //     ),
+        //     Spacer(),
+        //     IconButton(
+        //         onPressed: () {},
+        //         icon: Icon(Icons.person_outline)
+        //     )
+        //   ],
+        //
+        // )
+
         body: _widgetOptions.elementAt(homeProvider.navigationIndex),
         bottomNavigationBar: BottomNavigationBar(
           selectedLabelStyle:
