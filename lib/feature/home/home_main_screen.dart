@@ -30,19 +30,22 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   }
 
   void _startAutoSlider() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) async{
       if(_pageController.hasClients) {
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeIn
-        );
-      }
-      if(_currentPage == 1) {
-        Timer(const Duration(milliseconds: 350), () {
-          if(_pageController.hasClients) {
-            _pageController.jumpToPage(0);
-          }
-        });
+        if(_currentPage == 1) {
+          await _pageController.animateToPage(
+            _currentPage+1,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn
+          );
+          _pageController.jumpToPage(0);
+        } else {
+          await _pageController.animateToPage(
+            _currentPage+1,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn
+          );
+        }
       }
     });
   }
@@ -70,6 +73,11 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               height: height * 0.03,
               fit: BoxFit.contain,
             ),
+            Spacer(),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.person_outline)
+            )
           ],
         ),
       ),
@@ -111,10 +119,10 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 ),
               )
             ),
-          )
+          ),
+          
         ],
       ),
-      endDrawer: Icon(Icons.menu)
     );
   }
 }
