@@ -87,7 +87,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: height * 0.2,
+            height: height * 0.24,
             child: PageView(
               controller: _pageController,
               onPageChanged: (index) {
@@ -105,23 +105,6 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                   fit: BoxFit.contain,
                 )
               ],
-            ),
-          ),
-          SizedBox(height: height * 0.035),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(2, (index) =>
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _currentPage == index
-                    ? Colors.blue
-                    : Colors.grey
-                ),
-              )
             ),
           ),
           SizedBox(height: height * 0.05),
