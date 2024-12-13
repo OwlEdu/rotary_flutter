@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rotary_flutter/util/global_color.dart';
+
+import '../../constants/menu_items.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key});
@@ -120,7 +123,49 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               )
             ),
           ),
-          
+          SizedBox(height: height * 0.05),
+          Expanded(
+            child: Container(
+              color: GlobalColor.primaryColor,
+              padding: EdgeInsets.all(width * 0.02),
+              child: GridView.builder(
+                physics: const ClampingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.2,
+                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 1
+                ),
+                itemCount: menuItems.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: GlobalColor.indexBoxColor.withOpacity(0.1)),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          menuItems[index].iconPath,
+                          color: GlobalColor.indexBoxColor,
+                          width: width * 0.08,
+                          height: width * 0.08,
+                        ),
+                        SizedBox(height: height * 0.01),
+                        Text(
+                          menuItems[index].label,
+                          style: TextStyle(
+                            color: GlobalColor.indexBoxColor,
+                            fontSize: width * 0.035
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          )
         ],
       ),
     );
