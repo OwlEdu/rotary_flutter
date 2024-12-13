@@ -87,9 +87,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                childAspectRatio: 1.2,
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1),
+                childAspectRatio: 1.2),
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               // return Container(width: 50, height: 50,color: Colors.black,);
