@@ -107,6 +107,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               ],
             ),
           ),
+          SizedBox(height: height * 0.035),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(2, (index) =>
@@ -127,7 +128,6 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           Expanded(
             child: Container(
               color: GlobalColor.primaryColor,
-              padding: EdgeInsets.all(width * 0.02),
               child: GridView.builder(
                 physics: const ClampingScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -156,7 +156,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           menuItems[index].label,
                           style: TextStyle(
                             color: GlobalColor.indexBoxColor,
-                            fontSize: width * 0.035
+                            fontSize: width * 0.035,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],
