@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/feature/home/menu/allocation_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/criterion_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/notice_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/organization_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/policy_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/president_record_screen.dart';
@@ -58,6 +59,10 @@ final List<GoRoute> mainRouter = [
                 path: 'kRotaryKorea',
                 builder: (_,$)=> KRotaryKoreaScreen()
             ),
+            GoRoute(
+                path: 'notice',
+                builder: (_,$)=> NoticeScreen()
+            )
           ]
         ),
       ])
