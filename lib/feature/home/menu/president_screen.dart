@@ -21,7 +21,7 @@ class _PresidentScreen extends ConsumerState<PresidentScreen> {
           title: Text('RI 회장'),
           centerTitle: true,
         ),
-        body:SingleChildScrollView(child:Column(
+        body:ScrollablePinchView(child:Column(
           children: [
             Image.network(
               'https://mmate.flash21.com/images/rotary/ri-president.jpg',

@@ -62,7 +62,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         statusBarIconBrightness: Brightness.dark));
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: GlobalColor.primaryColor,
         body: CustomScrollView(
             physics: ClampingScrollPhysics(),
             slivers: [

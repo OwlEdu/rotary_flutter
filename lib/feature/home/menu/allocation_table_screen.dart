@@ -10,10 +10,14 @@ class AllocationTableScreen extends ConsumerStatefulWidget {
   const AllocationTableScreen({super.key});
 
   @override
-  ConsumerState<AllocationTableScreen> createState() => _AllocationTableScreen();
+  ConsumerState<AllocationTableScreen> createState() =>
+      _AllocationTableScreen();
 }
 
 class _AllocationTableScreen extends ConsumerState<AllocationTableScreen> {
+  final List<int> events = [];
+  bool isPinch = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +26,13 @@ class _AllocationTableScreen extends ConsumerState<AllocationTableScreen> {
           title: Text('배점표'),
           centerTitle: true,
         ),
-        body: Container(
-                    alignment: Alignment.topCenter,
-                    width: MediaQuery.of(context).size.width,
-                    child: PhotoView(
-                      basePosition: Alignment.topCenter,
-                      backgroundDecoration: BoxDecoration(color: GlobalColor.white),
-                      minScale: PhotoViewComputedScale.contained,
-                      gestureDetectorBehavior: HitTestBehavior.opaque,
-                      maxScale: PhotoViewComputedScale.covered * 6.0,
-                      imageProvider: AssetImage('asset/images/allocation_table_image.jpg'),
-                    )));
+        body: ScrollablePinchView(
+            child: Stack(children: [
+          Container(height: 600, child: Center(child: CircularProgressIndicator())),
+          Image.asset(
+            'asset/images/menu/allocation_table_image.jpg',
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          )])));
   }
 }

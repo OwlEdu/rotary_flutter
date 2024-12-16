@@ -32,7 +32,7 @@ class RotaryKoreaScreen extends StatelessWidget {
                       Fluttertoast.showToast(msg: '플레이스토어를 설치해주세요');
                     }
                   },
-                 child:Image.asset('asset/images/rotary_android_image.png',width: double.infinity,))
+                 child:Image.asset('asset/images/menu/korea_rotary_android_image.png',width: double.infinity,))
                 : InkWell(
                  onTap:()async{
                    if(await canLaunchUrl(iOSUrl)){
@@ -41,7 +41,7 @@ class RotaryKoreaScreen extends StatelessWidget {
                      Fluttertoast.showToast(msg: '앱 스토어를 열 수 없습니다');    //todo rotary:: 왜 안되냐...
                    }
                  },
-                 child:Image.asset('asset/images/rotary_ios_image.png',width: double.infinity,)
+                 child:Image.asset('asset/images/menu/korea_rotary_ios_image.png',width: double.infinity,)
              ),
             IndexText('클릭 후 다운로드 화면으로 이동합니다.')
     ]));

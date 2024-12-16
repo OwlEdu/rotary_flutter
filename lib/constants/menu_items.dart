@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/main.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuItem {
   final String iconPath;
@@ -54,7 +55,9 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/band.png',
     label : '3700밴드',
     onTap: () {
+      // https://band.us/band/50079452
 
+      launchUrl(Uri.parse('https://band.us/band/50079452'));
     }
   ),
   MenuItem(
@@ -75,7 +78,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/member.png',
     label : '지구임원',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/organization');
     }
   ),
   MenuItem(
@@ -111,13 +114,6 @@ final List<MenuItem> menuItems = [
     label : '로타리코리아',
     onTap: () {
       navigatorKey.currentContext?.push('/menu/rotaryKorea');
-    }
-  ),
-  MenuItem(
-    iconPath : 'asset/icons/org.png',
-    label : '조직도',
-    onTap: () {
-      navigatorKey.currentContext?.push('/menu/organization');
     }
   ),
   MenuItem(

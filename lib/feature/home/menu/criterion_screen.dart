@@ -14,6 +14,7 @@ class CriterionScreen extends ConsumerStatefulWidget {
 }
 
 class _CriterionScreen extends ConsumerState<CriterionScreen> {
+  bool _isLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +24,13 @@ class _CriterionScreen extends ConsumerState<CriterionScreen> {
           title: Text('표창기준'),
           centerTitle: true,
         ),
-        body:Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1200,
-                alignment: Alignment.topCenter,
-                child: PhotoView(
-                  basePosition: Alignment.topCenter,
-                    backgroundDecoration: BoxDecoration(color: GlobalColor.white),
-                    minScale: PhotoViewComputedScale.contained,
-                    gestureDetectorBehavior: HitTestBehavior.opaque,
-                    maxScale: PhotoViewComputedScale.covered * 6.0,
-                    imageProvider: NetworkImage(
-                        'https://mmate.flash21.com/images/rotary/criterion.jpg'),
-                )));
+        body: ScrollablePinchView(
+            child: Stack(children: [
+                Container(height: 600, child: Center(child: CircularProgressIndicator())),
+            Image.asset(
+              'asset/images/menu/criterion_image.jpg',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+    )])));
   }
 }

@@ -22,19 +22,10 @@ class _OrganizationScreen extends ConsumerState<OrganizationScreen> {
         appBar: AppBar(
           title: Text('조직도'),
         ),
-        body:Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              alignment: Alignment.topCenter,
-                width: MediaQuery.of(context).size.width,
-                child: PhotoView(
-                  basePosition: Alignment.topCenter,
-                    backgroundDecoration: BoxDecoration(color: GlobalColor.white),
-                    minScale: PhotoViewComputedScale.contained,
-                    gestureDetectorBehavior: HitTestBehavior.opaque,
-                    maxScale: PhotoViewComputedScale.covered * 6.0,
-                    imageProvider: NetworkImage(
-                        'https://mmate.flash21.com/images/rotary/organization.jpg'),
-                ))));
+        body:ScrollablePinchView(
+    child: Image.asset(
+    'asset/images/menu/organization_image.jpg',
+      width: MediaQuery.of(context).size.width,
+      fit: BoxFit.cover,),));
   }
 }
