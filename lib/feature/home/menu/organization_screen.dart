@@ -21,6 +21,7 @@ class _OrganizationScreen extends ConsumerState<OrganizationScreen> {
         backgroundColor: GlobalColor.white,
         appBar: AppBar(
           title: Text('조직도'),
+          centerTitle: true,
         ),
         body:Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),

@@ -19,7 +19,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/notice.png',
     label : '공지사항',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/notice');
     }
   ),
   MenuItem(
