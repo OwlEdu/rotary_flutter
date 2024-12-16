@@ -21,7 +21,7 @@ class _PresidentRecordScreen extends ConsumerState<PresidentRecordScreen> {
           title: Text('총재 약력'),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(child: Column(
+        body: ScrollablePinchView(child: Column(
           children: [
             Image.network(
               'https://mmate.flash21.com/images/rotary/capacity-img.jpg',

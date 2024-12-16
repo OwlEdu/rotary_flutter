@@ -68,6 +68,7 @@ flutter:
   assets:
     - asset/
     - asset/images/
+    - asset/images/menu/
     - asset/icons/
     - asset/icons/router/
 

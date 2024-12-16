@@ -21,7 +21,7 @@ class _PolicyScreen extends ConsumerState<PolicyScreen> {
           title: Text('운영방침'),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(child: Column(
+        body: ScrollablePinchView(child: Column(
           children: [
             Image.network(
               'https://mmate.flash21.com/images/rotary/operation-img.jpg',
