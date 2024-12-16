@@ -7,6 +7,8 @@ import 'package:rotary_flutter/util/main_router.dart';
 import 'feature/home/home_main_screen.dart';
 import 'feature/home_screen.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   runApp(ProviderScope(child: MyApp())); // MyApp
 }
@@ -42,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final GoRouter _router = GoRouter(
     initialLocation: '/',
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: '/',
