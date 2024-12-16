@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/feature/home/menu/allocation_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/criterion_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/homepage_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/introduce_foundation_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/magazine_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/notice_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/organization_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/policy_screen.dart';
@@ -72,6 +74,14 @@ final List<GoRoute> mainRouter = [
             GoRoute(
                 path: 'gallery',
                 builder: (_,$)=> GalleryScreen()
+            ),
+            GoRoute(
+                path: 'magazine',
+                builder: (_,$)=> MagazineScreen()
+            ),
+            GoRoute(
+                path: 'homePage',
+                builder: (_,$)=> HomepageScreen()
             )
           ]
         ),
