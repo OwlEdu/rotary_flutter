@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/feature/home/menu/allocation_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/criterion_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/introduce_foundation_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/notice_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/organization_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/policy_screen.dart';
@@ -9,6 +10,7 @@ import 'package:rotary_flutter/feature/home/menu/president_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/programing_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/rotary_korea_screen.dart';
 
+import '../feature/home/menu/gallery_screen.dart';
 import '../feature/home/menu/k_rotary_screen.dart';
 import '../feature/home_screen.dart';
 
@@ -62,6 +64,14 @@ final List<GoRoute> mainRouter = [
             GoRoute(
                 path: 'notice',
                 builder: (_,$)=> NoticeScreen()
+            ),
+            GoRoute(
+                path: 'introduce_foundation',
+                builder: (_,$)=> IntroduceFoundationScreen()
+            ),
+            GoRoute(
+                path: 'gallery',
+                builder: (_,$)=> GalleryScreen()
             )
           ]
         ),

@@ -34,7 +34,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/gallery.png',
     label : '지구갤러리',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/gallery');
     }
   ),
   MenuItem(
@@ -71,7 +71,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/document.png',
     label : '총재단소개',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/introduce_foundation');
     }
   ),
   MenuItem(
