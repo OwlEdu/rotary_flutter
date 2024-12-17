@@ -17,6 +17,7 @@ class IndexScreen extends StatelessWidget {
       backgroundColor: GlobalColor.white,
       appBar: AppBar(
         title: Text(path),
+        centerTitle: true,
       ),
       body: switch(path){
         '회원검색' => UserSearchScreen(),

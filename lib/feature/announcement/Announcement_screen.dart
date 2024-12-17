@@ -34,11 +34,6 @@ class _AnnouncementScreen extends State<AnnouncementScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: GlobalColor.white,
-        appBar: AppBar(
-          title: Text('공지사항'),
-          centerTitle: true,
-        ),
         body: WebViewWidget(controller: _controller),
       ),
     );
