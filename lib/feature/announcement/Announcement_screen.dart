@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:flutter/material.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class NoticeScreen extends StatefulWidget {
-  const NoticeScreen({super.key});
+class AnnouncementScreen extends StatefulWidget {
+  const AnnouncementScreen({super.key});
 
   @override
-  State<NoticeScreen> createState() => _NoticeScreenState();
+  State<AnnouncementScreen> createState() => _AnnouncementScreen();
 }
 
-class _NoticeScreenState extends State<NoticeScreen> {
+class _AnnouncementScreen extends State<AnnouncementScreen> {
   late WebViewController _controller = WebViewController();
 
   @override
@@ -25,11 +28,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: GlobalColor.white,
-      appBar: AppBar(
-        title: Text('공지사항'),
-        centerTitle: true,
-      ),
       body: WebViewWidget(controller: _controller),
     );
   }

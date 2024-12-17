@@ -1,13 +1,19 @@
 import 'package:go_router/go_router.dart';
+import 'package:rotary_flutter/feature/announcement/Announcement_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/advertise_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/allocation_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/criterion_screen.dart';
-import 'package:rotary_flutter/feature/home/menu/notice_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/event_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/index_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/organization_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/policy_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/president_birth_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/president_record_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/president_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/programing_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/rotary_korea_screen.dart';
+import 'package:rotary_flutter/feature/home/menu/userInfo/user_info_screen.dart';
+import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 
 import '../feature/home/menu/k_rotary_screen.dart';
 import '../feature/home_screen.dart';
@@ -60,9 +66,36 @@ final List<GoRoute> mainRouter = [
                 builder: (_,$)=> KRotaryKoreaScreen()
             ),
             GoRoute(
-                path: 'notice',
-                builder: (_,$)=> NoticeScreen()
-            )
+                path: 'announcement',
+                builder: (_,$)=> AnnouncementScreen()
+            ),
+              GoRoute(
+                  path: 'presidentBirth',
+                  builder: (_,$)=> PresidentBirthScreen()
+              ),
+            GoRoute(
+                path: 'advertise',
+                builder: (_,$)=> AdvertiseScreen()
+            ),
+            GoRoute(
+                path: 'event',
+                builder: (_,$)=> EventScreen()
+            ),
+            GoRoute(
+                path: 'userInfo',
+                builder: (_,$)=> UserInfoScreen()
+            ),
+            GoRoute(
+                path: 'userSearch',
+                builder: (_,$)=> UserSearchScreen()
+            ),
+              GoRoute(
+                  path: 'index/:path',
+                  builder: (context, state) {
+                      final String path = state.pathParameters['path'] ?? '';
+                      return IndexScreen(path: path);
+                  }
+              )
           ]
         ),
       ])

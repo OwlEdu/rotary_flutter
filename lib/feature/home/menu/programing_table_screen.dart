@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:rotary_flutter/feature/home/home_component.dart';
 import 'package:rotary_flutter/util/fontSize.dart';
 import 'package:rotary_flutter/util/global_color.dart';
@@ -23,12 +22,18 @@ class _ProgramingTableScreen extends ConsumerState<ProgramingTableScreen> {
           title: Text('편성표'),
           centerTitle: true,
         ),
-        body: ScrollablePinchView(
-          child: Image.asset(
-            'asset/images/menu/programming_table_image.jpg',
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
+        body: Column(
+          children: [
+            Expanded(
+                child: PinchView(
+                    child: Column(children: [
+              Image.asset(
+                'asset/images/menu/programming_table_image.jpg',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              ),
+            ])))
+          ],
         ));
   }
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 
 import '../../constants/menu_items.dart';
@@ -57,17 +58,15 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark));
-
-    return Scaffold(
-        backgroundColor: GlobalColor.primaryColor,
-        body: CustomScrollView(
+    return Container(child: CustomScrollView(
             physics: ClampingScrollPhysics(),
             slivers: [
           SliverToBoxAdapter(
-              child: Container(
+              child:InkWell(
+                  onTap: (){
+                    context.push('/menu/advertise');
+                  },
+                  child:Container(
                   width: double.infinity,
                   height: (MediaQuery.of(context).size.width) * 9 / 16,
                   child: PageView.builder(
@@ -85,7 +84,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                         fit: BoxFit.cover,
                       );
                     },
-                  ))),
+                  )))),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -101,13 +100,15 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
                   border: Border.all(
-                      color: GlobalColor.lightPrimaryColor),
+                      color: GlobalColor.indexPrimaryColor),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      menuItems[index].iconPath,
+                    menuItems[index].iconPath== null
+                    ?SizedBox()
+                    :Image.asset(
+                      menuItems[index].iconPath!,
                       color: GlobalColor.indexBoxColor,
                       width: width * 0.08,
                       height: width * 0.08,

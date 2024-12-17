@@ -4,12 +4,12 @@ import 'package:rotary_flutter/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuItem {
-  final String iconPath;
+  final String? iconPath;
   final String label;
   final Function() onTap;
 
   MenuItem({
-    required this.iconPath,
+    this.iconPath,
     required this.label,
     required this.onTap
   });
@@ -20,14 +20,14 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/notice.png',
     label : '공지사항',
     onTap: () {
-      navigatorKey.currentContext?.push('/menu/notice');
+      navigatorKey.currentContext?.push('/menu/index/공지사항');
     }
   ),
   MenuItem(
     iconPath : 'asset/icons/calender.png',
     label : '행사일정',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/event');
     }
   ),
   MenuItem(
@@ -55,8 +55,6 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/band.png',
     label : '3700밴드',
     onTap: () {
-      // https://band.us/band/50079452
-
       launchUrl(Uri.parse('https://band.us/band/50079452'));
     }
   ),
@@ -64,7 +62,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/write.png',
     label : '총재월신',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/presidentBirth');
     }
   ),
   MenuItem(
@@ -85,14 +83,14 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/search.png',
     label : '회원검색',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/index/회원검색');
     }
   ),
   MenuItem(
     iconPath : 'asset/icons/ads.png',
     label : '광고협찬',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/advertise');
     }
   ),
   MenuItem(
@@ -158,5 +156,9 @@ final List<MenuItem> menuItems = [
       navigatorKey.currentContext?.push('/menu/programing');
     }
   ),
-
+  MenuItem(
+      iconPath : null,
+      label : '',
+      onTap: () {}
+  ),
 ];

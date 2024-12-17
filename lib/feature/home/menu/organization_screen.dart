@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:rotary_flutter/feature/home/home_component.dart';
 import 'package:rotary_flutter/util/fontSize.dart';
 import 'package:rotary_flutter/util/global_color.dart';
@@ -20,7 +19,7 @@ class _OrganizationScreen extends ConsumerState<OrganizationScreen> {
     return Scaffold(
         backgroundColor: GlobalColor.white,
         appBar: AppBar(
-          title: Text('조직도'),
+          title: Text('지구임원'),
           centerTitle: true,
         ),
         body:ScrollablePinchView(
