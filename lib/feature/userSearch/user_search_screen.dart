@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rotary_flutter/widgets/search_widgets.dart';
+import 'package:rotary_flutter/widgets/userSearch/search_widgets.dart';
+import 'package:rotary_flutter/widgets/userSearch/user_list_widget.dart';
 
 class UserSearchScreen extends StatefulWidget {
-  const UserSearchScreen({super.key});
+
+  const UserSearchScreen({super.key, });
 
   @override
   State<UserSearchScreen> createState() => _UserSearchScreenState();
@@ -54,6 +56,14 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                     itemBuilder: (context, index) {
                       return LocationButton(number: index + 1, onTap: () {
                         print('${index+1}지역 선택됨');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserListWidget(
+                              initialRegion: '${index+1}지역',
+                            )
+                          )
+                        );
                       });
                     },
                   )
