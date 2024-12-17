@@ -34,7 +34,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/gallery.png',
     label : '지구갤러리',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/gallery');
     }
   ),
   MenuItem(
@@ -48,7 +48,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/homepage.png',
     label : '지구홈페이지',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/homePage');
     }
   ),
   MenuItem(
@@ -62,14 +62,14 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/write.png',
     label : '총재월신',
     onTap: () {
-      navigatorKey.currentContext?.push('/menu/presidentBirth');
+      navigatorKey.currentContext?.push('/menu/magazine');
     }
   ),
   MenuItem(
     iconPath : 'asset/icons/document.png',
     label : '총재단소개',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/introduce_foundation');
     }
   ),
   MenuItem(
