@@ -13,6 +13,7 @@ import 'package:rotary_flutter/feature/home_provider.dart';
 import 'package:rotary_flutter/feature/myInfo/my_info_screen.dart';
 import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 import 'package:rotary_flutter/util/global_color.dart';
+import 'package:rotary_flutter/util/secure_storage.dart';
 
 import '../util/fontSize.dart';
 import 'home/home_main_screen.dart';
@@ -251,6 +252,8 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
         print('메인 휴대폰번호 가져오기: $phoneNumber');
 
         Fluttertoast.showToast(msg: '휴대폰 번호: $phoneNumber');
+
+        globalStorage.write(key: 'phone', value: phoneNumber);
       } catch (e) {
         print('Error retrieving phone number: $e');
         Fluttertoast.showToast(msg: '휴대폰 번호를 가져오는 중 오류가 발생했습니다.');

@@ -46,6 +46,9 @@ dependencies:
   json_serializable: ^6.9.0
   json_annotation: ^4.9.0
 
+  #Local
+  flutter_secure_storage: ^9.2.2
+
   #Asset
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.16
