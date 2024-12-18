@@ -42,7 +42,7 @@ class AccountService {
         }
       );
 
-      final response = await dio.get('$baseUrl/account/$accountId', options: options);
+      final response = await dio.get('$baseUrl/Rotary3700/api/account/$accountId', options: options);
       if(response.statusCode == 200) {
         return AccountDetail.fromJson(response.data);
       }
