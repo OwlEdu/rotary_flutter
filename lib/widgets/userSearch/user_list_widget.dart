@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rotary_flutter/data/account/providers/account_provider.dart';
+import 'package:rotary_flutter/feature/home/menu/userInfo/user_info_screen.dart';
 import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 import 'package:rotary_flutter/util/global_color.dart';
+import 'package:rotary_flutter/data/account/models/account.dart';
 
-class UserListWidget extends StatefulWidget {
+class UserListWidget extends ConsumerStatefulWidget {
   final String initialRegion;
 
   const UserListWidget({super.key, required this.initialRegion});
 
 
   @override
-  State<UserListWidget> createState() => _UserListWidgetState();
+  ConsumerState<UserListWidget> createState() => _UserListWidgetState();
 }
 
-class _UserListWidgetState extends State<UserListWidget> {
+class _UserListWidgetState extends ConsumerState<UserListWidget> {
   late String _selectedRegion;
   String _selectedRC = 'RC';
   TextEditingController _searchController = TextEditingController();
@@ -24,7 +28,7 @@ class _UserListWidgetState extends State<UserListWidget> {
     _selectedRegion = widget.initialRegion;
   }
 
-  final List<String> regions = ['1지역', '2지역', '3지역', '4지역', '5지역', '6지역', '7지역'
+  final List<String> regions = ['1지역', '2지역', '3지역', '4지역', '5지역', '6지역', '7지역',
                                 '8지역', '9지역', '10지역', '11지역', '12지역'];
   final List<String> rc = ['RC'];
 
@@ -37,13 +41,27 @@ class _UserListWidgetState extends State<UserListWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final accountsAsync = ref.watch(accountsProvider(int.parse(_selectedRegion.replaceAll('지역', ''))));
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: GlobalColor.white,
+        foregroundColor: GlobalColor.black,
+        title: Padding(
+          padding: EdgeInsets.only(right: size.width * 0.15),
+          child: Center(
+            child: SvgPicture.asset(
+              'asset/images/main_logo.svg',
+              width: size.width * 0.55,
+            ),
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Container(
             padding: EdgeInsets.only(
-              left: size.width * 0.04, right: size.width * 0.04, top: size.width * 0.1, bottom: size.width * 0.04
+              left: size.width * 0.04, right: size.width * 0.04, bottom: size.width * 0.04
             ),
             decoration: BoxDecoration(
                 color: GlobalColor.white,
@@ -60,16 +78,27 @@ class _UserListWidgetState extends State<UserListWidget> {
                 // 지역 선택 버튼
                 Padding(
                   padding: EdgeInsets.only(left: size.width * 0.04),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(_selectedRegion),
-                        Icon(Icons.arrow_drop_down),
-                      ],
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _selectedRegion,
+                      items: regions.map((String region) {
+                        return DropdownMenuItem<String>(
+                          value: region,
+                          child: Text(region),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        if(newValue != null && newValue != _selectedRegion) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserListWidget(
+                                initialRegion: newValue,
+                              )
+                            )
+                          );
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -134,96 +163,117 @@ class _UserListWidgetState extends State<UserListWidget> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(size.width * 0.04),
-                child: Column(
-                  children: List.generate(
-                    4,
-                    (index) => Card(
-                    elevation: 2.0,
-                    margin: EdgeInsets.only(bottom: size.height * 0.02),
-                    child: Padding(
-                      padding: EdgeInsets.all(size.width * 0.03),
-                      child: Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                //TODO: 사진 클릭시 상세정보 들어가기
-                              },
-                              child: Container(
-                                width: size.width * 0.3,
-                                height: size.height * 0.2,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(size.width * 0.02)
-                                ),
-                                child: Icon(
-                                  Icons.person,
-                                  size: size.width * 0.1,
-                                  color: Colors.grey[400],
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: size.width * 0.04),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: size.width * 0.2,
-                                        height: size.height * 0.025,
-                                        color: Colors.grey[200],
-                                      ),
-                                      SizedBox(width: size.width * 0.02),
-                                      Container(
-                                        width: size.width * 0.15,
-                                        height: size.height * 0.025,
-                                        color: Colors.grey[200],
-                                      )
-                                    ],
+            child: accountsAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('Error: $error')),
+              data: (accounts) => SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(size.width * 0.04),
+                  child: Column(
+                    children: accounts.map((account) => Card(
+                      elevation: 2.0,
+                      margin: EdgeInsets.only(bottom: size.height * 0.02),
+                      child: Padding(
+                        padding: EdgeInsets.all(size.width * 0.03),
+                        child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UserInfoScreen()
+                                    )
+                                  );
+                                },
+                                child: Container(
+                                  width: size.width * 0.3,
+                                  height: size.height * 0.2,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(size.width * 0.02),
+                                    image: account.profileImage != null
+                                        ? DecorationImage(
+                                            image: NetworkImage(account.profileImage!),
+                                            fit: BoxFit.cover
+                                          )
+                                        : null,
                                   ),
-                                  SizedBox(height: size.height * 0.01),
-                                  Text('정회원', style: TextStyle(fontSize: size.width * 0.035)),
-                                  SizedBox(height: size.height * 0.008),
-                                  Row(
-                                    children: [
-                                      Text('직책', style: TextStyle(fontSize: size.width * 0.035)),
-                                      SizedBox(width: size.width * 0.02),
-                                      Container(
-                                        width: size.width * 0.1,
-                                        height: size.height * 0.025,
-                                        color: Colors.grey[200],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(height: size.height * 0.008),
-                                  Text('입회일', style: TextStyle(fontSize: size.width * 0.035)),
-                                  SizedBox(height: size.height * 0.008),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: size.width * 0.25,
-                                        height: size.height * 0.025,
-                                        color: Colors.grey[200],
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.phone, color: GlobalColor.primaryColor, size: size.width * 0.06),
-                                        onPressed: () {},
-                                      )
-                                    ],
+                                  child: account.profileImage == null
+                                    ? Icon(
+                                        Icons.person,
+                                        size: size.width * 0.1,
+                                        color: Colors.grey[400],
                                   )
-                                ],
+                                      :null,
+                                ),
                               ),
-                            )
-                          ],
+                              SizedBox(width: size.width * 0.04),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: size.width * 0.2,
+                                          height: size.height * 0.025,
+                                          color: Colors.grey[200],
+                                        ),
+                                        SizedBox(width: size.width * 0.02),
+                                        Container(
+                                          width: size.width * 0.15,
+                                          height: size.height * 0.025,
+                                          color: Colors.grey[200],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: size.height * 0.01),
+                                    Text(account.workPositionName ?? '직책 없음', style: TextStyle(fontSize: size.width * 0.035)),
+                                    SizedBox(height: size.height * 0.008),
+                                    Row(
+                                      children: [
+                                        Text(account.workPositionName ?? '직책 없음', style: TextStyle(fontSize: size.width * 0.035)),
+                                        SizedBox(width: size.width * 0.02),
+                                        Container(
+                                          width: size.width * 0.1,
+                                          height: size.height * 0.025,
+                                          color: Colors.grey[200],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: size.height * 0.008),
+                                    Text('입회일', style: TextStyle(fontSize: size.width * 0.035)),
+                                    SizedBox(height: size.height * 0.008),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          account.cellphone ?? '010-****-****',
+                                          style: TextStyle(fontSize: size.width * 0.035),
+                                        ),
+                                        Container(
+                                          width: size.width * 0.25,
+                                          height: size.height * 0.025,
+                                          color: Colors.grey[200],
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.phone, color: GlobalColor.primaryColor, size: size.width * 0.06),
+                                          onPressed: () {
+
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  )
+                      )
+                    ).toList()
+                  ),
                 ),
               ),
             ),

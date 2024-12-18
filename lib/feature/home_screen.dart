@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:permission_handler/permission_handler.dart';
+import "package:permission_handler/permission_handler.dart";
 import 'package:rotary_flutter/feature/announcement/Announcement_screen.dart';
 import 'package:rotary_flutter/feature/home_provider.dart';
 import 'package:rotary_flutter/feature/myInfo/my_info_screen.dart';
