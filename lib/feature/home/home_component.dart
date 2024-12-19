@@ -24,7 +24,7 @@ class IndexText extends StatelessWidget {
 }
 
 class IndexTitle extends StatelessWidget {
-  final String text;
+  final String? text;
   final Color? textColor;
 
   const IndexTitle(this.text, {super.key, this.textColor});
@@ -32,9 +32,27 @@ class IndexTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text??'',
       style: TextStyle(
           fontSize: DynamicFontSize.font21(context),
+          color: textColor ?? GlobalColor.black,
+          fontWeight: FontWeight.bold),
+    );
+  }
+}
+
+class IndexThumbTitle extends StatelessWidget {
+  final String? text;
+  final Color? textColor;
+
+  const IndexThumbTitle(this.text, {super.key, this.textColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text??'',
+      style: TextStyle(
+          fontSize: DynamicFontSize.font30(context),
           color: textColor ?? GlobalColor.black,
           fontWeight: FontWeight.bold),
     );

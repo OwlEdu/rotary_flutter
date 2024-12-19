@@ -13,4 +13,10 @@ abstract class AccountRepository {
   Future<List<Account>> getAccount(
     @Query('cellphone') String? cellphone
   );
+
+  @PUT("/account/{id}")
+  Future<Account> putAccount(
+      @Path("id") int id,
+      @Body() Account account
+      );
 }

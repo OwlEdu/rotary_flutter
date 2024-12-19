@@ -16,12 +16,12 @@ class Account {
   String? birthDate;
   String? workAddress;
   String? workAddressSub;
-  int? workAddressZipCode;
+  String? workAddressZipCode;
   String? workName;
   String? workPositionName;
   String? homeAddress;
   String? homeAddressSub;
-  int? homeAddressZipCode;
+  String? homeAddressZipCode;
   String? cardinal;
   String? groupCardinal;
   String? pastCardinal;

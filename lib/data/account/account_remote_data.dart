@@ -1,6 +1,6 @@
 import 'package:rotary_flutter/data/account/account_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import '../../util/state.dart';
 import '../../util/common.dart';
 import '../model/account_model.dart';
 
@@ -16,14 +16,14 @@ class AccountAPI {
   late AccountRepository accountRepository;
 
   AccountAPI() {
-    // dio.interceptors.add(LogInterceptor(
-    //   request: true, // 요청 데이터 로깅
-    //   requestHeader: true, // 요청 헤더 로깅
-    //   requestBody: true, // 요청 바디 로깅
-    //   responseHeader: true, // 응답 헤더 로깅
-    //   responseBody: true, // 응답 바디 로깅
-    //   error: true, // 에러 로깅
-    // ));
+    dio.interceptors.add(LogInterceptor(
+      request: true, // 요청 데이터 로깅
+      requestHeader: true, // 요청 헤더 로깅
+      requestBody: true, // 요청 바디 로깅
+      responseHeader: true, // 응답 헤더 로깅
+      responseBody: true, // 응답 바디 로깅
+      error: true, // 에러 로깅
+    ));
     accountRepository = AccountRepository(dio, baseUrl: serverUrl);
   }
 
@@ -35,6 +35,17 @@ class AccountAPI {
     } catch (e) {
       print('getAccount error: $e');
       return null;
+    }
+  }
+
+  Future<State> putAccount(Account account) async {
+    try {
+      final result = await accountRepository.putAccount(account.id??0, account);
+      print('success: $result');
+      return Success(result);
+    } catch (e) {
+      print('getAccount error: $e');
+      return Error(e);
     }
   }
 }
