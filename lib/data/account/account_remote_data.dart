@@ -1,4 +1,4 @@
-import 'package:rotary_flutter/data/account/account_repository.dart';
+import 'package:rotary_flutter/data/account/repository/account_repository.dart';
 import 'package:dio/dio.dart';
 import '../../util/state.dart';
 import '../../util/common.dart';

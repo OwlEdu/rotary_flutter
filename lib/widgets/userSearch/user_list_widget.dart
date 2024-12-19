@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rotary_flutter/data/account/providers/account_provider.dart';
 import 'package:rotary_flutter/feature/home/menu/userInfo/user_info_screen.dart';
-import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 import 'package:rotary_flutter/util/global_color.dart';
-import 'package:rotary_flutter/data/account/models/account.dart';
 
 class UserListWidget extends ConsumerStatefulWidget {
   final String initialRegion;
@@ -41,7 +38,6 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final accountsAsync = ref.watch(accountsProvider(int.parse(_selectedRegion.replaceAll('지역', ''))));
 
     return Scaffold(
       appBar: AppBar(
@@ -192,20 +188,7 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(size.width * 0.02),
-                                    image: account.profileImage != null
-                                        ? DecorationImage(
-                                            image: NetworkImage(account.profileImage!),
-                                            fit: BoxFit.cover
-                                          )
-                                        : null,
                                   ),
-                                  child: account.profileImage == null
-                                    ? Icon(
-                                        Icons.person,
-                                        size: size.width * 0.1,
-                                        color: Colors.grey[400],
-                                  )
-                                      :null,
                                 ),
                               ),
                               SizedBox(width: size.width * 0.04),
@@ -215,16 +198,20 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
                                   children: [
                                     Row(
                                       children: [
-                                        Container(
-                                          width: size.width * 0.2,
-                                          height: size.height * 0.025,
-                                          color: Colors.grey[200],
+                                        Text(
+                                          account.name,
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold
+                                          ),
                                         ),
                                         SizedBox(width: size.width * 0.02),
-                                        Container(
-                                          width: size.width * 0.15,
-                                          height: size.height * 0.025,
-                                          color: Colors.grey[200],
+                                        Text(
+                                          account.groupCardinal ?? 'RC미지정',
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.035,
+                                            color: GlobalColor.primaryColor
+                                          ),
                                         )
                                       ],
                                     ),
@@ -249,7 +236,7 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          account.cellphone ?? '010-****-****',
+                                          account.cellphone ?? '전화번호 없음',
                                           style: TextStyle(fontSize: size.width * 0.035),
                                         ),
                                         Container(
