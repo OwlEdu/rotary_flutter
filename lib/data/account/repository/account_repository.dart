@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../model/account_model.dart';
+import '../../model/account_model.dart';
 
 part 'account_repository.g.dart';
 
