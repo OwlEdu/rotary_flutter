@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/main.dart';
+import 'package:rotary_flutter/util/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuItem {
@@ -97,7 +98,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/myInfo.png',
     label : '자기정보수정',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/myInfoModify');
     }
   ),
   MenuItem(
@@ -159,6 +160,6 @@ final List<MenuItem> menuItems = [
   MenuItem(
       iconPath : null,
       label : '',
-      onTap: () {}
+      onTap: (){}
   ),
 ];

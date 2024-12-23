@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rotary_flutter/feature/home/home_component.dart';
+import 'package:rotary_flutter/feature/home/home_main_component.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../util/global_color.dart';

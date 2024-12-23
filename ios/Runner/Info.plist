@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Rotary Flutter</string>
+	<string>국제로타리 3700지구</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -50,5 +50,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+          <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
+            <key>NSAllowsArbitraryLoadsInWebContent</key>
+            <true/>
+          </dict>
+        <key>io.flutter.embedded_views_preview</key>
+        <true/>
 </dict>
 </plist>

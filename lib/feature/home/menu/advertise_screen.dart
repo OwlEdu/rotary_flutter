@@ -4,7 +4,7 @@ import 'package:rotary_flutter/data/model/advertise_model.dart';
 import 'package:rotary_flutter/util/fontSize.dart';
 
 import '../../../util/global_color.dart';
-import '../home_component.dart';
+import '../home_main_component.dart';
 
 class AdvertiseScreen extends ConsumerStatefulWidget {
   const AdvertiseScreen({super.key});

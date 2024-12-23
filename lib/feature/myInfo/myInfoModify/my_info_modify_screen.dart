@@ -3,21 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rotary_flutter/constants/menu_items.dart';
-import 'package:rotary_flutter/data/account/account_remote_data.dart';
+import 'package:rotary_flutter/feature/home_component.dart';
+import 'package:rotary_flutter/util/model/menu_items.dart';
+import 'package:rotary_flutter/data/remoteData/account_remote_data.dart';
 import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_component.dart';
 import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rotary_flutter/data/model/account_model.dart';
-import '../../../util/state.dart';
+import '../../../util/model/state.dart';
 import '../../../util/fontSize.dart';
 import '../../../util/global_color.dart';
-import '../../home/home_component.dart';
+import '../../home/home_main_component.dart';
+import '../my_info_view_model.dart';
 
 class MyInfoModifyScreen extends ConsumerStatefulWidget {
-  final Account account;
-
-  const MyInfoModifyScreen({super.key, required this.account});
+  const MyInfoModifyScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MyInfoModifyScreen();
@@ -37,17 +37,28 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
   var typeController = TextEditingController();
 
   void addController() {
-    nickNameController.text = null ?? '';
-    birthDateController.text = widget.account.birthDate ?? '';
-    enNameController.text = null ?? '';
-    memoController.text = null ?? '';
 
-    workNameController.text = widget.account.workName ?? '';
-    workPositionNameController.text = widget.account.workPositionName ?? '';
-    workAddressZipCodeController.text = '${widget.account.workAddressZipCode}' ?? '';
-    workAddressController.text = widget.account.workAddress ?? '';
-    workAddressSubController.text = widget.account.workAddressSub ?? '';
-    typeController.text = null ?? '';
+  }
+
+  void getMyData() async {
+    var myInfoProvider = ref.read(MyInfoProvider);
+    await myInfoProvider.getMyAccount();
+
+    loadStateFunction(myInfoProvider.accountState, (data){
+      var account = (data as List<Account>).first;
+
+      nickNameController.text = null ?? '';
+      birthDateController.text = account.birthDate ?? '';
+      enNameController.text = null ?? '';
+      memoController.text = null ?? '';
+
+      workNameController.text = account.workName ?? '';
+      workPositionNameController.text = account.workPositionName ?? '';
+      workAddressZipCodeController.text = '${account.workAddressZipCode}' ?? '';
+      workAddressController.text = account.workAddress ?? '';
+      workAddressSubController.text = account.workAddressSub ?? '';
+      typeController.text = null ?? '';
+    });
   }
 
   @override
@@ -60,16 +71,19 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     addController();
+    getMyData();
   }
 
   @override
   Widget build(BuildContext context) {
     var myInfoModifyProvider = ref.read(MyInfoModifyProvider);
+    var myInfoProvider = ref.watch(MyInfoProvider);
 
-    return Scaffold(
+    return LoadStateScaffold(
+      loadState: myInfoProvider.accountState,
       backgroundColor: GlobalColor.white,
       appBar: AppBar(
         title: Text('회원정보 수정'),
@@ -79,7 +93,7 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: InkWell(
                 onTap: ()async{
-                  var data = widget.account;
+                  var data = (myInfoProvider.accountState as Success).data.first;
 
                   data.birthDate = birthDateController.text;
                   data.workName = workNameController.text;
@@ -108,7 +122,10 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
               ))
         ],
       ),
-      body: DefaultTabController(
+      successBody:(data){
+        var account = (data as List<Account>).first;
+
+        return DefaultTabController(
         length: 2,
         child: Column(
           children: [
@@ -153,13 +170,13 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
                                 height: 100,
                               ),
                             ),
-                            SizedBox(width: 10,),
+                            SizedBox(width: 15,),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IndexThumbTitle(widget.account.name),
-                                SizedBox(height: 10,),
-                                IndexThumbTitle(widget.account.name), SizedBox(height: 10,),
-                                IndexThumbTitle(widget.account.name),],)],),
+                                  IndexThumbTitle(account.name),
+                                  SizedBox(height: 10,),
+                                  IndexThumbTitle(account.cellphone)])],),
                         SizedBox(height: 30,),
                         MyInfoModifyTextField(indexTitle: '아호', indexController: nickNameController),
                         SizedBox(height: 15,),
@@ -196,7 +213,8 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
             ),
           ],
         ),
-      ),
+
+      );}
     );
   }
 }

@@ -12,7 +12,7 @@ import 'feature/home_screen.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
-  runApp(ProviderScope(child: MyApp())); // MyApp
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -24,6 +24,30 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "getPhoneNumber" -> getPhoneNumber(result)
+                "logd" -> {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    Log.d(tag, message) // Android LogCat에 출력
+                    result.success(null)
+                }
+                "loge" -> {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    Log.e(tag, message) // Android LogCat에 출력
+                    result.success(null)
+                }
+                "logw" -> {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    Log.w(tag, message) // Android LogCat에 출력
+                    result.success(null)
+                }
+                "logwtf" -> {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    Log.wtf(tag, message) // Android LogCat에 출력
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         }

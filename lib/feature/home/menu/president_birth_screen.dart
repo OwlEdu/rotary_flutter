@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rotary_flutter/util/fontSize.dart';
 
 import '../../../util/global_color.dart';
-import '../home_component.dart';
+import '../home_main_component.dart';
 
 class PresidentBirthScreen extends ConsumerStatefulWidget {
   const PresidentBirthScreen({super.key});

@@ -8,13 +8,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import "package:permission_handler/permission_handler.dart";
+import 'package:rotary_flutter/data/remoteData/account_remote_data.dart';
 import 'package:rotary_flutter/feature/announcement/Announcement_screen.dart';
+import 'package:rotary_flutter/feature/home_component.dart';
 import 'package:rotary_flutter/feature/home_provider.dart';
 import 'package:rotary_flutter/feature/myInfo/my_info_screen.dart';
 import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 import 'package:rotary_flutter/util/global_color.dart';
+import 'package:rotary_flutter/util/logger.dart';
 import 'package:rotary_flutter/util/secure_storage.dart';
 
+import '../data/model/account_model.dart';
 import '../util/fontSize.dart';
 import 'home/home_main_screen.dart';
 
@@ -46,7 +50,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
 
     Color getAppBarColor() {
       return (selectedIndex == 2)
-          ? GlobalColor.webPrimaryColor
+          ? GlobalColor.white
           : GlobalColor.white;
     }
 
@@ -59,14 +63,13 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
 
     final double statusBarSize = MediaQuery.of(context).padding.top;
 
-
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: getAppBarColor(),
+            backgroundColor: getAppBarColor(),
             title: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 height: 50,
@@ -75,185 +78,207 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
                   borderRadius: BorderRadius.circular(100),
                   color: GlobalColor.indexBoxColor,
                 ),
-                child:Row(children: [SvgPicture.asset(
-                  height: 20,
-                  'asset/images/main_logo.svg',
-                  fit: BoxFit.contain,
-                )]))),
-
-        body: _widgetOptions.elementAt(homeProvider.navigationIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle:
-              TextStyle(fontSize: 0, fontWeight: FontWeight.bold),
-          unselectedLabelStyle:
-              TextStyle(fontSize: 0, fontWeight: FontWeight.bold),
-          backgroundColor: Colors.white,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 5, top: 10),
-                  child: Column(
-                    children: [
-                      if (homeProvider.navigationIndex == 0)
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/home_filled_icon.svg',
-                        )
-                      else
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/home_outline_icon.svg',
-                        ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '홈',
-                        style: TextStyle(
-                            color: homeProvider.navigationIndex == 0
-                                ? GlobalColor.primaryColor
-                                : Colors.grey,
-                            fontWeight: homeProvider.navigationIndex == 0
-                                ? FontWeight.bold
-                                : FontWeight.w400),
-                      )
-                    ],
-                  )),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 5, top: 10),
-                  child: Column(
-                    children: [
-                      if (homeProvider.navigationIndex == 1)
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/user_search_filled_icon.svg',
-                        )
-                      else
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/user_search_outline_icon.svg',
-                        ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '회원검색',
-                        style: TextStyle(
-                            color: homeProvider.navigationIndex == 1
-                                ? GlobalColor.primaryColor
-                                : Colors.grey,
-                            fontWeight: homeProvider.navigationIndex == 1
-                                ? FontWeight.bold
-                                : FontWeight.w400),
-                      )
-                    ],
+                child: Row(children: [
+                  SvgPicture.asset(
+                    height: 20,
+                    'asset/images/main_logo.svg',
+                    fit: BoxFit.contain,
                   )
-                  // : Image.asset(
-                  //     'images/Color.fromARGB(255, 4, 2, 1)                 //     width: 20,
-                  //     height: 20,
-                  //     color: CustomColor.greyFontColor,
-                  //   ),
-                  ),
-              label: '',
+                ]))),
+        body: _widgetOptions.elementAt(homeProvider.navigationIndex),
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: GlobalColor.indexBoxColor, // 상단 테두리 색상
+                  width: 0.5, // 상단 테두리 두께
+                ),
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 5, top: 10),
-                  child: Column(
-                    children: [
-                      if (homeProvider.navigationIndex == 2)
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/announcement_filled_icon.svg',
-                        )
-                      else
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/announcement_outline_icon.svg',
-                        ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '공지사항',
-                        style: TextStyle(
-                            color: homeProvider.navigationIndex == 2
-                                ? GlobalColor.primaryColor
-                                : Colors.grey,
-                            fontWeight: homeProvider.navigationIndex == 2
-                                ? FontWeight.bold
-                                : FontWeight.w400),
+            child: BottomNavigationBar(
+              selectedLabelStyle:
+                  TextStyle(fontSize: 0, fontWeight: FontWeight.bold),
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 0, fontWeight: FontWeight.bold),
+              backgroundColor: Colors.white,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, top: 10),
+                      child: Column(
+                        children: [
+                          if (homeProvider.navigationIndex == 0)
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/home_filled_icon.svg',
+                            )
+                          else
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/home_outline_icon.svg',
+                            ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '홈',
+                            style: TextStyle(
+                                color: homeProvider.navigationIndex == 0
+                                    ? GlobalColor.primaryColor
+                                    : Colors.grey,
+                                fontWeight: homeProvider.navigationIndex == 0
+                                    ? FontWeight.bold
+                                    : FontWeight.w400),
+                          )
+                        ],
+                      )),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, top: 10),
+                      child: Column(
+                        children: [
+                          if (homeProvider.navigationIndex == 1)
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/user_search_filled_icon.svg',
+                            )
+                          else
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/user_search_outline_icon.svg',
+                            ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '회원검색',
+                            style: TextStyle(
+                                color: homeProvider.navigationIndex == 1
+                                    ? GlobalColor.primaryColor
+                                    : Colors.grey,
+                                fontWeight: homeProvider.navigationIndex == 1
+                                    ? FontWeight.bold
+                                    : FontWeight.w400),
+                          )
+                        ],
                       )
-                    ],
-                  )),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                  padding: const EdgeInsets.only(bottom: 5, top: 10),
-                  child: Column(
-                    children: [
-                      if (homeProvider.navigationIndex == 3)
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/my_info_filled_icon.svg',
-                        )
-                      else
-                        SvgPicture.asset(
-                          width: 25,
-                          height: 25,
-                          'asset/icons/router/my_info_outline_icon.svg',
-                        ),
-                      SizedBox(
-                        height: 5,
+                      // : Image.asset(
+                      //     'images/Color.fromARGB(255, 4, 2, 1)                 //     width: 20,
+                      //     height: 20,
+                      //     color: CustomColor.greyFontColor,
+                      //   ),
                       ),
-                      Text(
-                        '내 정보',
-                        style: TextStyle(
-                            color: homeProvider.navigationIndex == 3
-                                ? GlobalColor.primaryColor
-                                : Colors.grey,
-                            fontWeight: homeProvider.navigationIndex == 3
-                                ? FontWeight.bold
-                                : FontWeight.w400),
-                      )
-                    ],
-                  )),
-              label: '',
-            ),
-          ],
-          currentIndex: homeProvider.navigationIndex,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: GlobalColor.primaryColor,
-          showUnselectedLabels: true,
-          onTap: onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          elevation: 10,
-          unselectedFontSize: DynamicFontSize.font13(context),
-          selectedFontSize: DynamicFontSize.font13(context),
-        ));
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, top: 10),
+                      child: Column(
+                        children: [
+                          if (homeProvider.navigationIndex == 2)
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/announcement_filled_icon.svg',
+                            )
+                          else
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/announcement_outline_icon.svg',
+                            ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '공지사항',
+                            style: TextStyle(
+                                color: homeProvider.navigationIndex == 2
+                                    ? GlobalColor.primaryColor
+                                    : Colors.grey,
+                                fontWeight: homeProvider.navigationIndex == 2
+                                    ? FontWeight.bold
+                                    : FontWeight.w400),
+                          )
+                        ],
+                      )),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, top: 10),
+                      child: Column(
+                        children: [
+                          if (homeProvider.navigationIndex == 3)
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/my_info_filled_icon.svg',
+                            )
+                          else
+                            SvgPicture.asset(
+                              width: 25,
+                              height: 25,
+                              'asset/icons/router/my_info_outline_icon.svg',
+                            ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '내 정보',
+                            style: TextStyle(
+                                color: homeProvider.navigationIndex == 3
+                                    ? GlobalColor.primaryColor
+                                    : Colors.grey,
+                                fontWeight: homeProvider.navigationIndex == 3
+                                    ? FontWeight.bold
+                                    : FontWeight.w400),
+                          )
+                        ],
+                      )),
+                  label: '',
+                ),
+              ],
+              currentIndex: homeProvider.navigationIndex,
+              unselectedItemColor: Colors.grey,
+              selectedItemColor: GlobalColor.primaryColor,
+              showUnselectedLabels: true,
+              onTap: onItemTapped,
+              type: BottomNavigationBarType.fixed,
+              elevation: 0,
+              unselectedFontSize: DynamicFontSize.font13(context),
+              selectedFontSize: DynamicFontSize.font13(context),
+            )));
   }
 
   Future<void> getPhoneNumber() async {
     if (await Permission.phone.request().isGranted) {
       const androidChannel = MethodChannel('com.flash21.rotary_3700/android');
       try {
-        final phoneNumber = await androidChannel.invokeMethod('getPhoneNumber');
-        print('메인 휴대폰번호 가져오기: $phoneNumber');
+        final phone = await androidChannel.invokeMethod('getPhoneNumber');
+        print('메인 휴대폰번호 가져오기: $phone');
 
-        Fluttertoast.showToast(msg: '휴대폰 번호: $phoneNumber');
+        if (phone != null) {
+          final phoneNumber = '${phone?.substring(0, 3)}-${phone?.substring(3, 7)}-${phone?.substring(7)}';
+          var dataState = await AccountAPI().getAccount(cellphone: phoneNumber);
 
-        globalStorage.write(key: 'phone', value: phoneNumber);
+          loadStateFunction(dataState, (data){
+            var result = (data as List<Account>)[0].name;
+
+            Fluttertoast.showToast(msg: '${result}님 로그인에 성공하였습니다.');
+            globalStorage.write(key: 'phone', value: phoneNumber);
+          },
+          onError: (e){
+            print('onError: e');
+          });
+
+        }
       } catch (e) {
         print('Error retrieving phone number: $e');
         Fluttertoast.showToast(msg: '휴대폰 번호를 가져오는 중 오류가 발생했습니다.');

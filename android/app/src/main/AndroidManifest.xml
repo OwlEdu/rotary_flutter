@@ -27,7 +27,7 @@
     </queries>
 
     <application
-        android:label="rotary_flutter"
+        android:label="국제로타리 3700지구"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

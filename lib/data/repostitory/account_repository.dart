@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../model/account_model.dart';
+import '../model/account_model.dart';
 
 part 'account_repository.g.dart';
 
@@ -11,7 +11,9 @@ abstract class AccountRepository {
 
   @GET("/account")
   Future<List<Account>> getAccount(
-    @Query('cellphone') String? cellphone
+    @Query('cellphone') String? cellphone,
+    @Query('id') int? id,
+    @Query('name') String? name,
   );
 
   @PUT("/account/{id}")

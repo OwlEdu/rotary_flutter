@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 
-import '../../constants/menu_items.dart';
+import '../../util/model/menu_items.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key});

@@ -7,6 +7,7 @@ import 'package:rotary_flutter/feature/home/menu/president_record_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/president_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/programing_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/rotary_korea_screen.dart';
+import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_screen.dart';
 import '../feature/announcement/Announcement_screen.dart';
 import '../feature/home/menu/advertise_screen.dart';
 import '../feature/home/menu/event_screen.dart';
@@ -17,8 +18,8 @@ import '../feature/home/menu/introduce_foundation_screen.dart';
 import '../feature/home/menu/k_rotary_screen.dart';
 import '../feature/home/menu/magazine_screen.dart';
 import '../feature/home/menu/president_birth_screen.dart';
-import '../feature/home/menu/userInfo/user_info_screen.dart';
 import '../feature/home_screen.dart';
+import '../feature/userSearch/userInfo/user_info_screen.dart';
 import '../feature/userSearch/user_search_screen.dart';
 
 final List<GoRoute> mainRouter = [
@@ -85,8 +86,12 @@ final List<GoRoute> mainRouter = [
                 builder: (_,$)=> EventScreen()
             ),
             GoRoute(
-                path: 'userInfo',
-                builder: (_,$)=> UserInfoScreen()
+                path: 'userInfo/:id',
+                builder: (_,state) {
+                    final int id = int.parse(state.pathParameters['id']??'0');
+                 return   UserInfoScreen(id: id);
+                }
+
             ),
             GoRoute(
                 path: 'userSearch',
@@ -114,7 +119,11 @@ final List<GoRoute> mainRouter = [
             GoRoute(
                 path: 'homePage',
                 builder: (_,$)=> HomepageScreen()
-            )
+            ),
+            GoRoute(
+                path: 'myInfoModify',
+                builder: (_,$)=> MyInfoModifyScreen()
+            ),
           ]
         ),
       ])
