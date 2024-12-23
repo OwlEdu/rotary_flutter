@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 
-import '../../constants/menu_items.dart';
+import '../../util/model/menu_items.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key});
@@ -57,15 +58,15 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark));
-
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(slivers: [
+    return Container(child: CustomScrollView(
+            physics: ClampingScrollPhysics(),
+            slivers: [
           SliverToBoxAdapter(
-              child: Container(
+              child:InkWell(
+                  onTap: (){
+                    context.push('/menu/advertise');
+                  },
+                  child:Container(
                   width: double.infinity,
                   height: (MediaQuery.of(context).size.width) * 9 / 16,
                   child: PageView.builder(
@@ -80,10 +81,10 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                       final bannerIndex = index % _banners.length;
                       return Image.asset(
                         _banners[bannerIndex],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       );
                     },
-                  ))),
+                  )))),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -91,17 +92,23 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               // return Container(width: 50, height: 50,color: Colors.black,);
-              return Container(
+              return InkWell(
+                  onTap: (){
+                    menuItems[index].onTap();
+                  },
+                  child:Container(
                 decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
                   border: Border.all(
-                      color: GlobalColor.lightPrimaryColor),
+                      color: GlobalColor.indexPrimaryColor),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      menuItems[index].iconPath,
+                    menuItems[index].iconPath== null
+                    ?SizedBox()
+                    :Image.asset(
+                      menuItems[index].iconPath!,
                       color: GlobalColor.indexBoxColor,
                       width: width * 0.08,
                       height: width * 0.08,
@@ -116,7 +123,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                     )
                   ],
                 ),
-              );
+              ));
             }, childCount: menuItems.length
                 // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 //   crossAxisCount: 3,

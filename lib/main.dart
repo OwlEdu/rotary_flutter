@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,8 +9,10 @@ import 'package:rotary_flutter/util/main_router.dart';
 import 'feature/home/home_main_screen.dart';
 import 'feature/home_screen.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
-  runApp(ProviderScope(child: MyApp())); // MyApp
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -42,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final GoRouter _router = GoRouter(
     initialLocation: '/',
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: '/',
@@ -76,3 +81,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+//   }
+// }
