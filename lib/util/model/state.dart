@@ -1,4 +1,6 @@
-abstract class LoadState{}
+abstract class LoadState{
+
+}
 
 class Loading extends LoadState {
 

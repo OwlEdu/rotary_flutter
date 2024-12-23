@@ -12,8 +12,12 @@ class UserSearchListViewModel with ChangeNotifier {
   LoadState userListState = Loading();
 
   Future getAccountList() async {
-    userListState = Loading();
-    userListState = await AccountAPI().getAccount();
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      userListState = Loading();
+      notifyListeners();
+
+      userListState = await AccountAPI().getAccount();
+      notifyListeners();
+    });
   }
 }

@@ -12,8 +12,12 @@ class UserInfoViewModel with ChangeNotifier {
   LoadState userInfoState = Loading();
 
   Future getUserInfo(int id) async {
-    userInfoState = Loading();
-    userInfoState = await AccountAPI().getAccount(id: id);
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      userInfoState = Loading();
+      notifyListeners();
+
+      userInfoState = await AccountAPI().getAccount(id: id);
+      notifyListeners();
+    });
   }
 }

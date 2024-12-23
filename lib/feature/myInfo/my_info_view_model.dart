@@ -14,9 +14,14 @@ class MyInfoViewModel with ChangeNotifier {
   LoadState accountState = Loading();
 
   Future getMyAccount() async {
-    accountState = Loading();
-    var cellphone = await globalStorage.read(key: 'phone');
-    accountState = await AccountAPI().getAccount(cellphone: cellphone);
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      accountState = Loading();
+      notifyListeners();
+
+      var cellphone = await globalStorage.read(key: 'phone');
+
+      accountState = await AccountAPI().getAccount(cellphone: cellphone);
+      notifyListeners();
+    });
   }
 }

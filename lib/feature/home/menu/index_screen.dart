@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rotary_flutter/feature/announcement/Announcement_screen.dart';
+import 'package:rotary_flutter/feature/announcement/announcement_screen.dart';
 import 'package:rotary_flutter/feature/userSearch/user_search_screen.dart';
 
 import '../../../util/global_color.dart';

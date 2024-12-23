@@ -32,8 +32,8 @@ class _MyInfoScreen extends ConsumerState<MyInfoScreen> {
 
   @override
   void initState() {
-    getMyData();
     super.initState();
+    getMyData();
   }
 
   @override
@@ -107,45 +107,6 @@ class _MyInfoScreen extends ConsumerState<MyInfoScreen> {
                   ))
             ]));
       },
-      // errorBody: WebView(
-      //   initialUrl: Uri.dataFromString(
-      //     '''
-      //     <!DOCTYPE html>
-      //     <html>
-      //     <head>
-      //       <meta charset="utf-8">
-      //       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      //       <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_API_KEY"></script>
-      //       <style>
-      //         html, body {
-      //           margin: 0;
-      //           padding: 0;
-      //           height: 100%;
-      //         }
-      //         #map {
-      //           width: 100%;
-      //           height: 100%;
-      //         }
-      //       </style>
-      //     </head>
-      //     <body>
-      //       <div id="map"></div>
-      //       <script>
-      //         var mapContainer = document.getElementById('map');
-      //         var mapOption = {
-      //           center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 좌표
-      //           level: 3 // 지도의 확대 레벨
-      //         };
-      //
-      //         var map = new kakao.maps.Map(mapContainer, mapOption);
-      //       </script>
-      //     </body>
-      //     </html>
-      //     ''',
-      //     mimeType: 'text/html',
-      //   ).toString(),
-      //   javascriptMode: JavascriptMode.unrestricted,
-      // ),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:rotary_flutter/feature/home/menu/president_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/programing_table_screen.dart';
 import 'package:rotary_flutter/feature/home/menu/rotary_korea_screen.dart';
 import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_screen.dart';
-import '../feature/announcement/Announcement_screen.dart';
+import '../feature/announcement/announcement_screen.dart';
 import '../feature/home/menu/advertise_screen.dart';
 import '../feature/home/menu/event_screen.dart';
 import '../feature/home/menu/gallery_screen.dart';

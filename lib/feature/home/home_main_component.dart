@@ -207,7 +207,7 @@ class CustomDropdown extends ConsumerWidget {
                 child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(
-                height: 300,
+                height: 450,
                 child: Scrollbar(
                   thumbVisibility: true, // 항상 보이도록 설정
                   thickness: 2,

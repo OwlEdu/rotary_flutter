@@ -90,3 +90,24 @@ void loadStateFunction(LoadState loadState, Function(dynamic) onSuccess, {Functi
   }
 }
 
+LoadState runCatching(LoadState Function() function, {required Function onSuccess, Function()? onFailure}){
+  late LoadState data;
+
+ try {
+   WidgetsBinding.instance.addPostFrameCallback((_) async {
+     var load = function();
+     if(load is Success){
+       onSuccess();
+     }else if(load is Error && onFailure != null){
+       onFailure();
+     }
+     data = load;
+   });
+ }catch(e){
+   if (onFailure != null) {
+     data = Error(e);
+   }
+ }
+ return data;
+}
+

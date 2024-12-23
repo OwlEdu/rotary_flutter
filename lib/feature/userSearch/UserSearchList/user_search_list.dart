@@ -155,9 +155,8 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
                                       SizedBox(
                                         width: 5,
                                       ),
-                                      IndexText('대구유성 RC')
-                                    ],
-                                  ),
+                                      IndexText('대구유성 RC',overFlowFade: true,)
+                                    ]),
                                   SizedBox(
                                     height: 5,
                                   ),

@@ -30,6 +30,7 @@
         android:label="국제로타리 3700지구"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
@@ -59,6 +60,11 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+<!--    <meta-data-->
+<!--        android:name="com.google.android.geo.API_KEY"-->
+<!--        android:value="YOUR_ANDROID_API_KEY" />-->
+
+
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
