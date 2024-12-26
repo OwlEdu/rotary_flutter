@@ -3,59 +3,41 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rotary_flutter/feature/home_component.dart';
 import 'package:rotary_flutter/feature/userSearch/UserSearchList/user_search_list_view_model.dart';
+import 'package:rotary_flutter/util/model/cardinal_location.dart';
+import 'package:rotary_flutter/util/model/cardinal_r_c.dart';
 
 import '../../../data/model/account_model.dart';
 import '../../../util/global_color.dart';
 import '../../home/home_main_component.dart';
 
 class UserListWidget extends ConsumerStatefulWidget {
-  final int initialRegion;
+  final int initialLocation;
 
-  const UserListWidget({super.key, required this.initialRegion});
+  const UserListWidget({super.key, required this.initialLocation});
 
   @override
   ConsumerState<UserListWidget> createState() => _UserListWidgetState();
 }
 
 class _UserListWidgetState extends ConsumerState<UserListWidget> {
-  late int _selectedRegion;
+  late int _selectedLocation;
   late int _selectedRC;
   TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _selectedRegion = widget.initialRegion;
+    _selectedLocation = widget.initialLocation;
     _selectedRC = 0;
 
-    ref.read(UserSearchListProvider).getAccountList();
+    getAccountList();
   }
 
-  final List<String> regions = [
-    '1지역',
-    '2지역',
-    '3지역',
-    '4지역',
-    '5지역',
-    '6지역',
-    '7지역',
-    '8지역',
-    '9지역',
-    '10지역',
-    '11지역',
-    '12지역'
-  ];
-  final List<String> rc = [
-    'RC',
-    '청도 RC',
-    '대구영남 RC',
-    '대구청운 RC',
-    '대구태양 RC',
-    '청도원화 RC',
-    '대구유성 RC',
-    '대구대성 RC',
-    '대구송원 RC'
-  ];
+  void getAccountList() {
+    ref.read(UserSearchListProvider).getAccountList(
+        cardinal: CardinalLocation.all[_selectedLocation].id,
+        groupCardinal: CardinalRC.all[_selectedRC].id);
+  }
 
   @override
   void dispose() {
@@ -83,24 +65,24 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
               child: Row(
                 children: [
                   CustomDropdown(
-                      items: regions,
-                      selectedValue: _selectedRegion,
+                      items: CardinalLocation.all.map((value) => value.name).toList(),
+                      selectedValue: _selectedLocation,
                       onChanged: (value) {
-                        if (value != null && value != _selectedRegion) {
-                          setState(() => _selectedRegion = value);
+                        if (value != null && value != _selectedLocation) {
+                          setState(() => _selectedLocation = value);
+                          getAccountList();
                         }
-                        context.pop();
                       }),
 
                   SizedBox(width: 10),
                   CustomDropdown(
-                      items: rc,
+                      items: CardinalRC.all.map((value) => value.name).toList(),
                       selectedValue: _selectedRC,
                       onChanged: (value) {
-                        setState(() {
-                          _selectedRC = value!;
-                        });
-                        context.pop();
+                        if (value != null && value != _selectedLocation) {
+                          setState(() => _selectedRC = value);
+                          getAccountList();
+                        }
                       }),
 
                   SizedBox(width: 10),
@@ -125,72 +107,96 @@ class _UserListWidgetState extends ConsumerState<UserListWidget> {
                   successWidget: (data) {
                     var accounts = data as List<Account>;
 
-                    return ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      itemCount: accounts.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(onTap: (){
-                          context.push('/menu/userInfo/${accounts[index].id}');
-                        },child: Container(
-                          decoration: BoxDecoration(
-                              color: GlobalColor.white,
-                              borderRadius: BorderRadius.circular(20)),
-                          padding: EdgeInsets.all(20),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 120,
-                                height: 160,
-                                color: GlobalColor.primaryColor,
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      IndexThumbTitle(accounts[index].name),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      IndexText('대구유성 RC',overFlowFade: true,)
-                                    ]),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  IndexText('정회원'),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(children: [
-                                    IndexText('직책'),
-                                    IndexText('초대회장'),
-                                  ]),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(children: [
-                                    IndexText('입회일'),
-                                  ]),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  IndexText('010-****-****'),
-                                ],
-                              )
-                            ],
-                          ),
-                        ));
-                      },
-                      separatorBuilder: (_, $) {
-                        return SizedBox(
-                          height: 10,
-                        );
-                      },
-                    );
-                  }))
+                    return LoadStateWidget(
+                        loadState: userSearchListProvider.userListState,
+                        successWidget: (data) {
+                          return ListView.separated(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            itemCount: accounts.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                  onTap: () {
+                                    context.push(
+                                        '/menu/userInfo/${accounts[index].id}');
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: GlobalColor.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    padding: EdgeInsets.all(20),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 120,
+                                          height: 160,
+                                          color: GlobalColor.primaryColor,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(children: [
+                                              IndexThumbTitle(
+                                                  accounts[index].name),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              IndexText(
+                                                accounts[index].groupCardinal?.name,
+                                                overFlowFade: true,
+                                              )
+                                            ]),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            IndexText('정회원'),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(children: [
+                                              IndexText('직책'),
+                                              IndexText('초대회장'),
+                                            ]),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(children: [
+                                              IndexText('입회일'),
+                                            ]),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            IndexText('010-****-****'),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ));
+                            },
+                            separatorBuilder: (_, $) {
+                              return SizedBox(
+                                height: 10,
+                              );
+                            },
+                          );
+                        });
+                  },errorWidget: Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 150,
+                      ),
+                      Text(
+                        'ⓘ',
+                        style: TextStyle(fontSize: 40),
+                      ),
+                      IndexText('조회된 데이터가 없습니다.'),
+                    ],
+                  ))))
         ]));
   }
 }

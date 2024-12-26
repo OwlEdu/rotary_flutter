@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rotary_flutter/data/model/schedule_model.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -23,38 +24,13 @@ class _EventScreenState extends State<EventScreen> {
   String? category;
 
 // 1. EventTile 리스트 생성
-  final List<EventTileData> allEventTiles = [
-    EventTileData(
-      major: '건축과',
-      st: 52,
-      name: '한상수',
-      location: '경북대학교 장례식장',
-      startDate: '2024-08-20',
-      endDate: '2024-08-22',
-      obituary: true,
-    ),
-    EventTileData(
-      major: '법학과',
-      st: 52,
-      name: '김철수',
-      location: '신라웨딩 3층 장미홀',
-      startDate: '2024-08-29',
-      endDate: '',
-      wedding: true,
-    ),
-    EventTileData(
-      major: '경영학과',
-      st: 52,
-      name: '신짱구',
-      location: '수성아트피아',
-      startDate: '2024-08-28',
-      endDate: '',
-      event: true,
-    ),
-    // 필요시 더 많은 EventTileData 추가 가능
+  final List<ScheduleModel> allEventTiles = [
+    ScheduleModel(
+      time: '2024-12-23',
+      title: 'title',
+      content: 'content'
+    )
   ];
-  List<dynamic> eventList = [];
-  List<dynamic> allEventList = [];
   @override
   DateTime selectedDate = DateTime.utc(
     DateTime.now().year,
@@ -66,46 +42,6 @@ class _EventScreenState extends State<EventScreen> {
   DateTime? endDate; // 일정의 종료 날짜
   Map<DateTime, List<String>> events = {}; // 날짜별 일정 데이터
   // List<String>
-  // 날짜 선택 시 호출되는 함수
-  Future<void> onDaySelected(
-      DateTime selectedDate, DateTime focusedDate) async {
-    setState(() {
-      isLoaded = false;
-      this.selectedDate = selectedDate;
-    });
-    String formattedDate = DateFormat('yyyyMM').format(selectedDate);
-    String formattedDate2 = DateFormat('yyyy-MM-dd').format(selectedDate);
-    print('현재 선택한 날짜 ${formattedDate}');
-    // var result = await EventsApi().getEventsList('con', category, formattedDate);
-    setState(() {
-      // List<dynamic> eventData = result.data;
-      // allEventList = result.data;
-      // eventList = eventData.where((item) => item.board_eventsdate == formattedDate2).toList();
-      isLoaded = true;
-    });
-  }
-
-  // 이전 달로 이동
-  void _goToPreviousMonth() {
-    setState(() {
-      selectedDate = DateTime(
-        selectedDate.year,
-        selectedDate.month - 1,
-        selectedDate.day,
-      );
-    });
-  }
-
-  // 다음 달로 이동
-  void _goToNextMonth() {
-    setState(() {
-      selectedDate = DateTime(
-        selectedDate.year,
-        selectedDate.month + 1,
-        selectedDate.day,
-      );
-    });
-  }
 
   // 연도 선택 팝업
   Future<void> _selectYear() async {
@@ -180,15 +116,25 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void initState() {
     super.initState();
-    onDaySelected(selectedDate, selectedDate);
+    // onDaySelected(selectedDate, selectedDate);
+  }
+
+  Future<void> onDaySelected(DateTime selectedDate, DateTime focusedDate) async {
+    setState(() {
+      this.selectedDate = selectedDate;
+    });
+    String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+    print('현재 선택한 날짜 ${formattedDate}');
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: GlobalColor.white,
       appBar: AppBar(
-        title: Text('배점표'),
+        title: Text('행사일정'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -215,43 +161,21 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                   Spacer(),
                   InkWell(
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      size: 18,
-                    ),
-                    onTap: _goToPreviousMonth, // 이전 달로 이동
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                    child: const Icon(Icons.arrow_back_ios_rounded, size: 18,),
+                    onTap: (){setState(() => selectedDate = DateTime(selectedDate.year, selectedDate.month - 1, selectedDate.day,));},),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: _selectMonth, // 월 선택 팝업 호출
-                    child: Text(
-                      '${selectedDate.month}월',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                    child: Text('${selectedDate.month}월', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20.0,),),),
+                  const SizedBox(width: 10,),
                   InkWell(
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 18,
-                    ),
-                    onTap: _goToNextMonth, // 다음 달로 이동
+                    onTap: ()=> setState(() => selectedDate = DateTime(selectedDate.year, selectedDate.month + 1, selectedDate.day,)),
+                    child: const Icon(Icons.arrow_forward_ios_rounded, size: 18,), // 다음 달로 이동
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10,),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10,),
               // TableCalendar
               Container(
                 decoration: BoxDecoration(
@@ -265,7 +189,6 @@ class _EventScreenState extends State<EventScreen> {
                     return isSameDay(selectedDate, date);
                   },
                   onPageChanged: (focusedDay) {
-                    String formattedDate = DateFormat('MM').format(focusedDay);
                     setState(() {
                       selectedDate = focusedDay;
                       onDaySelected(selectedDate, selectedDate);
@@ -279,16 +202,20 @@ class _EventScreenState extends State<EventScreen> {
                   eventLoader: (day) {
                     // 선택된 날짜에 해당하는 이벤트를 반환
                     String formattedDate = DateFormat('yyyy-MM-dd').format(day);
-                    if (allEventList.any((item) {
-                      return item.board_eventsdate == formattedDate;
-                    })) {
+                    // if (allEventList.any((item) {
+                    //   return item.board_eventsdate == formattedDate;
+                    // })) {
+                    //   return ['hi'];
+                    // } else
+                    if(formattedDate == '2024-11-18'){
                       return ['hi'];
-                    } else
+                    }else {
                       return [];
+                    }
                   },
-                  calendarStyle: CalendarStyle(
+                  calendarStyle: const CalendarStyle(
                     todayDecoration: BoxDecoration(
-                      color: const Color.fromARGB(86, 5, 73, 151),
+                      color: Color.fromARGB(86, 5, 73, 151),
                       shape: BoxShape.circle,
                     ),
                     selectedDecoration: BoxDecoration(
@@ -306,69 +233,19 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                 ),
               ),
-              // 선택한 날짜의 일정 목록 표시
               if (isLoaded)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     children: [
-                      if (eventList.length == 0)
+                      if (true)//eventList.length == 0)
                         Center(
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 35,
-                              ),
+                              SizedBox(height: 35,),
                               Text(
                                 '해당 날짜에는 이벤트가 없습니다',
-                                style: TextStyle(
-                                    fontSize: DynamicFontSize.font18(context)),
-                              )
-                            ],
-                          ),
-                        )
-                      else
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    // context.pushNamed('EventDetailScreen',
-                                    //     extra: {
-                                    //       'type': eventList[index].board_id??'con',
-                                    //       'no': eventList[index].board_no
-                                    //     });
-                                  },
-                                  child: EventTile(
-                                    major: eventList[index].create_name,
-                                    st: 0,
-                                    category: eventList[index].board_type,
-                                    name: eventList[index].board_title,
-                                    location:
-                                        '${eventList[index].board_address}',
-                                    startDate:
-                                        eventList[index].board_eventsdate,
-                                    endDate: eventList[index].board_eventedate,
-                                    obituary: false,
-                                    wedding: false,
-                                    event: false,
-                                  ),
-                                ),
-                                // 마지막 EventTile이 아닐 경우에만 간격 추가
-                                if (index < allEventTiles.length - 1)
-                                  SizedBox(height: 10),
-                              ],
-                            );
-                          },
-                          itemCount: eventList.length,
-                        )
-                      // for(var i=0; i<eventList!.length!; i++)
-                    ],
-                  ),
-                )
+                                style: TextStyle(fontSize: DynamicFontSize.font18(context)),)],),)],),)
               else
                 Padding(
                   padding: EdgeInsets.all(50),

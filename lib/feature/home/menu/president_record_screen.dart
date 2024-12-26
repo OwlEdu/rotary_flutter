@@ -5,14 +5,9 @@ import 'package:rotary_flutter/feature/home/home_main_component.dart';
 import 'package:rotary_flutter/util/fontSize.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 
-class PresidentRecordScreen extends ConsumerStatefulWidget {
+class PresidentRecordScreen extends StatelessWidget {
   const PresidentRecordScreen({super.key});
 
-  @override
-  ConsumerState<PresidentRecordScreen> createState() => _PresidentRecordScreen();
-}
-
-class _PresidentRecordScreen extends ConsumerState<PresidentRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

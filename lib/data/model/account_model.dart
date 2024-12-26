@@ -22,9 +22,9 @@ class Account {
   String? homeAddress;
   String? homeAddressSub;
   String? homeAddressZipCode;
-  String? cardinal;
-  String? groupCardinal;
-  String? pastCardinal;
+  Cardinal? cardinal;
+  Cardinal? groupCardinal;
+  Cardinal? pastCardinal;
   bool? android;
   bool? ios;
   bool? active;
@@ -74,9 +74,15 @@ class Account {
     homeAddress = json['homeAddress'];
     homeAddressSub = json['homeAddressSub'];
     homeAddressZipCode = json['homeAddressZipCode'];
-    cardinal = json['cardinal'];
-    groupCardinal = json['groupCardinal'];
-    pastCardinal = json['pastCardinal'];
+    cardinal = json['cardinal'] != null
+        ? new Cardinal.fromJson(json['cardinal'])
+        : null;
+    groupCardinal = json['groupCardinal'] != null
+        ? new Cardinal.fromJson(json['groupCardinal'])
+        : null;
+    pastCardinal = json['pastCardinal'] != null
+        ? new Cardinal.fromJson(json['pastCardinal'])
+        : null;
     android = json['android'];
     ios = json['ios'];
     active = json['active'];
@@ -102,11 +108,55 @@ class Account {
     data['homeAddress'] = this.homeAddress;
     data['homeAddressSub'] = this.homeAddressSub;
     data['homeAddressZipCode'] = this.homeAddressZipCode;
-    data['cardinal'] = this.cardinal;
-    data['groupCardinal'] = this.groupCardinal;
-    data['pastCardinal'] = this.pastCardinal;
+    if (this.cardinal != null) {
+      data['cardinal'] = this.cardinal!.toJson();
+    }
+    if (this.groupCardinal != null) {
+      data['groupCardinal'] = this.groupCardinal!.toJson();
+    }
+    if (this.pastCardinal != null) {
+      data['pastCardinal'] = this.pastCardinal!.toJson();
+    }
     data['android'] = this.android;
     data['ios'] = this.ios;
+    data['active'] = this.active;
+    return data;
+  }
+}
+
+@JsonSerializable()
+class Cardinal {
+  int? id;
+  String? name;
+  String? positionName;
+  int? order;
+  int? groupOrder;
+  bool? active;
+
+  Cardinal(
+      {this.id,
+        this.name,
+        this.positionName,
+        this.order,
+        this.groupOrder,
+        this.active});
+
+  Cardinal.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    positionName = json['positionName'];
+    order = json['order'];
+    groupOrder = json['groupOrder'];
+    active = json['active'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['positionName'] = this.positionName;
+    data['order'] = this.order;
+    data['groupOrder'] = this.groupOrder;
     data['active'] = this.active;
     return data;
   }

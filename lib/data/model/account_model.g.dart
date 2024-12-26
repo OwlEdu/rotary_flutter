@@ -25,9 +25,15 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       homeAddress: json['homeAddress'] as String?,
       homeAddressSub: json['homeAddressSub'] as String?,
       homeAddressZipCode: json['homeAddressZipCode'] as String?,
-      cardinal: json['cardinal'] as String?,
-      groupCardinal: json['groupCardinal'] as String?,
-      pastCardinal: json['pastCardinal'] as String?,
+      cardinal: json['cardinal'] == null
+          ? null
+          : Cardinal.fromJson(json['cardinal'] as Map<String, dynamic>),
+      groupCardinal: json['groupCardinal'] == null
+          ? null
+          : Cardinal.fromJson(json['groupCardinal'] as Map<String, dynamic>),
+      pastCardinal: json['pastCardinal'] == null
+          ? null
+          : Cardinal.fromJson(json['pastCardinal'] as Map<String, dynamic>),
       android: json['android'] as bool?,
       ios: json['ios'] as bool?,
       active: json['active'] as bool?,
@@ -57,5 +63,23 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'pastCardinal': instance.pastCardinal,
       'android': instance.android,
       'ios': instance.ios,
+      'active': instance.active,
+    };
+
+Cardinal _$CardinalFromJson(Map<String, dynamic> json) => Cardinal(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      positionName: json['positionName'] as String?,
+      order: (json['order'] as num?)?.toInt(),
+      groupOrder: (json['groupOrder'] as num?)?.toInt(),
+      active: json['active'] as bool?,
+    );
+
+Map<String, dynamic> _$CardinalToJson(Cardinal instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'positionName': instance.positionName,
+      'order': instance.order,
+      'groupOrder': instance.groupOrder,
       'active': instance.active,
     };

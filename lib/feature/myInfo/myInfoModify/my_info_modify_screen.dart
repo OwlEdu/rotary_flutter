@@ -10,6 +10,8 @@ import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_compon
 import 'package:rotary_flutter/feature/myInfo/myInfoModify/my_info_modify_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rotary_flutter/data/model/account_model.dart';
+import '../../../util/common/date_input_formatter.dart';
+import '../../../util/logger.dart';
 import '../../../util/model/state.dart';
 import '../../../util/fontSize.dart';
 import '../../../util/global_color.dart';
@@ -36,19 +38,16 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
   var workAddressSubController = TextEditingController();
   var typeController = TextEditingController();
 
-  void addController() {
-
-  }
-
   void getMyData() async {
     var myInfoProvider = ref.read(MyInfoProvider);
     await myInfoProvider.getMyAccount();
 
-    loadStateFunction(myInfoProvider.accountState, (data){
+      Log.d("hello: heli ${myInfoProvider.accountState}");
+    loadStateFunction(myInfoProvider.accountState,onSuccess: (data){
       var account = (data as List<Account>).first;
 
       nickNameController.text = null ?? '';
-      birthDateController.text = account.birthDate ?? '';
+      birthDateController.text =account.birthDate ?? '';
       enNameController.text = null ?? '';
       memoController.text = null ?? '';
 
@@ -58,6 +57,7 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
       workAddressController.text = account.workAddress ?? '';
       workAddressSubController.text = account.workAddressSub ?? '';
       typeController.text = null ?? '';
+
     });
   }
 
@@ -73,7 +73,6 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
   @override
   void initState() {
     super.initState();
-    addController();
     getMyData();
   }
 
@@ -176,11 +175,11 @@ class _MyInfoModifyScreen extends ConsumerState<MyInfoModifyScreen> {
                               children: [
                                   IndexThumbTitle(account.name),
                                   SizedBox(height: 10,),
-                                  IndexThumbTitle(account.cellphone)])],),
+                                  IndexThumbTitle('${account.cellphone?.substring(0, 3)}-${account.cellphone?.substring(3, 7)}-${account.cellphone?.substring(7)}')])],),
                         SizedBox(height: 30,),
                         MyInfoModifyTextField(indexTitle: '아호', indexController: nickNameController),
                         SizedBox(height: 15,),
-                        MyInfoModifyTextField(indexTitle: '생년월일', indexController: birthDateController),
+                        MyInfoModifyTextField(indexTitle: '생년월일', indexController: birthDateController,keyboardType: TextInputType.number,inputFormatters: [DateInputFormatter()],),
                         SizedBox(height: 15,),
                         MyInfoModifyTextField(indexTitle: '영문명', indexController: enNameController),
                         SizedBox(height: 15,),

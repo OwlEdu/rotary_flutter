@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rotary_flutter/data/model/board_model.dart';
+import 'package:rotary_flutter/data/model/article_model.dart';
 import 'package:rotary_flutter/feature/announcement/announcement_view_model.dart';
 import 'package:rotary_flutter/feature/home/home_main_component.dart';
 import 'package:rotary_flutter/feature/home_component.dart';
@@ -21,8 +21,7 @@ class _AnnouncementScreen extends ConsumerState<AnnouncementScreen> {
   @override
   void initState() {
     super.initState();
-
-      ref.read(AnnouncementProvider).getBoard();
+    ref.read(AnnouncementProvider).getArticle();
   }
 
 
@@ -33,7 +32,7 @@ class _AnnouncementScreen extends ConsumerState<AnnouncementScreen> {
     return LoadStateScaffold(
       backgroundColor: GlobalColor.white,
       loadState: announcementProvider.announcementState,
-      successBody:(data) { data as List<Board>;
+      successBody:(data) { data as List<Article>;
         return ListView.separated(
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.all(15),
@@ -54,9 +53,8 @@ class _AnnouncementScreen extends ConsumerState<AnnouncementScreen> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IndexTitle(data[index].name),
-                    IndexText('내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
-                      overFlowFade: true,),
+                    IndexTitle(data[index].title),
+                    IndexText(data[index].content, overFlowFade: true,),
                     SizedBox(height: 15,),
                     IndexMinText('2023-02-24 업데이트')
                   ]

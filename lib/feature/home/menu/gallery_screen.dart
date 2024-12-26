@@ -20,6 +20,13 @@ class GalleryScreenState extends State<GalleryScreen> {
       ..loadRequest(Uri.parse('http://rotary3700.or.kr/bsbbs/list?tn=gallery&pcate=123&cyear=2023'));
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(Duration(milliseconds: 300)).then((value)=> setState(() =>()));
+    Future.delayed(Duration(milliseconds: 500)).then((value)=> setState(() =>()));
+  }
+
   Future<bool> _onWillPop() async {
     if(await _controller.canGoBack()) {
       await _controller.goBack();

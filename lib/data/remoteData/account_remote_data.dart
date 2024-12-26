@@ -27,11 +27,17 @@ class AccountAPI {
     accountRepository = AccountRepository(dio, baseUrl: serverUrl);
   }
 
-  Future<LoadState> getAccount({String? cellphone, int? id, String? name}) async {
+  Future<LoadState> getAccount({
+    String? cellphone,
+    int? id,
+    String? name,
+    int? cardinal,
+    int? groupCardinal
+  }) async {
     try {
-      final result = await accountRepository.getAccount(cellphone, id, name);
+      final result = await accountRepository.getAccount(cellphone, id, name, cardinal, groupCardinal);
       print('success: $result');
-      
+
       return Success(result);
     } catch (e) {
       print('getAccount error: $e');

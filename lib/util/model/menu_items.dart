@@ -42,7 +42,7 @@ final List<MenuItem> menuItems = [
     iconPath : 'asset/icons/my_rotary.png',
     label : '내 로타리',
     onTap: () {
-
+      navigatorKey.currentContext?.push('/menu/myRotary');
     }
   ),
   MenuItem(

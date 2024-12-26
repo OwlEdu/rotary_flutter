@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:rotary_flutter/util/global_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class MagazineScreen extends StatefulWidget {
-  const MagazineScreen({super.key});
+import '../../../util/global_color.dart';
+
+class MyRotaryScreen extends StatefulWidget {
+  const MyRotaryScreen({super.key});
 
   @override
-  State<MagazineScreen> createState() => MagazineScreenState();
+  State<MyRotaryScreen> createState() => _MyRotaryScreen();
 }
 
-class MagazineScreenState extends State<MagazineScreen> {
+class _MyRotaryScreen extends State<MyRotaryScreen> {
   late WebViewController _controller = WebViewController();
 
   @override
@@ -17,8 +18,9 @@ class MagazineScreenState extends State<MagazineScreen> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('http://rotary3700.or.kr/bsbbs/list?tn=magazine'));
+      ..loadRequest(Uri.parse('https://my.rotary.org/ko'));
   }
+
 
   @override
   void didChangeDependencies() {
@@ -42,7 +44,7 @@ class MagazineScreenState extends State<MagazineScreen> {
       child: Scaffold(
         backgroundColor: GlobalColor.white,
         appBar: AppBar(
-          title: Text('총재월신'),
+          title: Text('내 로타리'),
           centerTitle: true,
         ),
         body: WebViewWidget(controller: _controller),

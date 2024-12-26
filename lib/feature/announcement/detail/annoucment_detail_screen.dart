@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rotary_flutter/data/model/article_model.dart';
 import 'package:rotary_flutter/feature/announcement/Announcement_screen.dart';
 import 'package:rotary_flutter/feature/home/home_main_component.dart';
 import 'package:rotary_flutter/util/global_color.dart';
 
-import '../../../data/model/board_model.dart';
 
 class AnnouncementDetailScreen extends StatelessWidget {
-  final Board board;
+  final Article board;
 
   const AnnouncementDetailScreen({super.key, required this.board});
 
@@ -25,8 +25,8 @@ class AnnouncementDetailScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-            IndexThumbTitle(board.name ?? ''),
-            IndexText('내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용'),
+            IndexThumbTitle(board.title),
+            IndexText(board.content),
             SizedBox(
               height: 30,
             ),

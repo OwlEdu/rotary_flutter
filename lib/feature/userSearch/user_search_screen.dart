@@ -56,7 +56,13 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                             height: 5,
                           ),
                           InkWell(
-                            onTap: () {},
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const UserListWidget(initialLocation: 0)));
+                            },
                             child: Container(
                               padding: EdgeInsets.only(
                                   left: 15, right: 5, top: 5, bottom: 5),
@@ -76,7 +82,17 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                     ],
                   ),
                   SizedBox(height: 10),
-                Container(
+                InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserListWidget(
+                                initialLocation: 1)));
+                  },
+                    child: Container(
                     height: 95,
                     decoration: BoxDecoration(
                         color: GlobalColor.indexBoxColor,
@@ -102,7 +118,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                             IndexText('132명'),
                           ],)
                       ],
-                    )),
+                    ))),
 
                   SizedBox(height: 10),
                   GridView.builder(
@@ -120,6 +136,8 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                               color: GlobalColor.indexBoxColor,
                               borderRadius: BorderRadius.circular(20)),
                           child: InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
@@ -130,14 +148,14 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                                       height: 30,
                                     ),
                                     SizedBox(height: 10,),
-                                    IndexText('${index + 1}지역',)
+                                    IndexText('${index+1}지역',)
                                   ]),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => UserListWidget(
-                                            initialRegion: index)));
+                                            initialLocation: index+2)));
                               }));
                     },
                   )

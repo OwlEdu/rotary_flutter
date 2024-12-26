@@ -29,6 +29,13 @@ class IntroduceFoundationScreenState extends State<IntroduceFoundationScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(const Duration(milliseconds: 300)).then((value)=> setState(() =>()));
+    Future.delayed(const Duration(milliseconds: 500)).then((value)=> setState(() =>()));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,

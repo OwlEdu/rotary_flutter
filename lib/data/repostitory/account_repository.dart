@@ -14,11 +14,10 @@ abstract class AccountRepository {
     @Query('cellphone') String? cellphone,
     @Query('id') int? id,
     @Query('name') String? name,
+    @Query('cardinal') int? cardinal,
+    @Query('groupCardinal') int? groupCardinal,
   );
 
   @PUT("/account/{id}")
-  Future<Account> putAccount(
-      @Path("id") int id,
-      @Body() Account account
-      );
+  Future<Account> putAccount(@Path("id") int id, @Body() Account account);
 }

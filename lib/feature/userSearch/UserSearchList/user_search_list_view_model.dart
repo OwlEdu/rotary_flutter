@@ -11,12 +11,12 @@ final UserSearchListProvider = ChangeNotifierProvider.autoDispose<UserSearchList
 class UserSearchListViewModel with ChangeNotifier {
   LoadState userListState = Loading();
 
-  Future getAccountList() async {
+  Future getAccountList({int? cardinal, int? groupCardinal}) async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       userListState = Loading();
       notifyListeners();
 
-      userListState = await AccountAPI().getAccount();
+      userListState = await AccountAPI().getAccount(cardinal: cardinal, groupCardinal: groupCardinal);
       notifyListeners();
     });
   }

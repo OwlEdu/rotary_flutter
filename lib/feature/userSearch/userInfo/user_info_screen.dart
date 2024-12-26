@@ -112,7 +112,7 @@ class _UserInfoScreen extends ConsumerState<UserInfoScreen> {
                               assetName:
                                   'asset/icons/userInfo/affiliation_icon.svg',
                               indexName: '소속',
-                              index: '대구청구 RC'),
+                              index: account.groupCardinal?.name),
                           UserInfoIndex(
                               assetName:
                                   'asset/icons/userInfo/calendar_icon.svg',

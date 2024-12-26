@@ -22,7 +22,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   int _currentPage = 0;
 
   final _banners = [
-    'asset/images/rotary_slide.png',
+    'asset/images/star_logo.jpg',
     'asset/images/rotary_slide02.png'
   ];
 
@@ -68,7 +68,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                   },
                   child:Container(
                   width: double.infinity,
-                  height: (MediaQuery.of(context).size.width) * 9 / 16,
+                  height: (MediaQuery.of(context).size.width) * 6 / 16,
                   child: PageView.builder(
                     onPageChanged: (index) {
                       setState(() {
@@ -88,7 +88,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                childAspectRatio: 1.2),
+                childAspectRatio: 1.6),
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               // return Container(width: 50, height: 50,color: Colors.black,);
@@ -100,7 +100,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                 decoration: BoxDecoration(
                   color: GlobalColor.primaryColor,
                   border: Border.all(
-                      color: GlobalColor.indexPrimaryColor),
+                    width: 0.5,
+                      color: Colors.white24),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

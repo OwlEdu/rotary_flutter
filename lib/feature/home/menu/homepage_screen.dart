@@ -21,6 +21,13 @@ class _HomepageScreenState extends State<HomepageScreen> {
       ..loadRequest(Uri.parse('http://rotary3700.or.kr/web/index'));
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(const Duration(milliseconds: 300)).then((value)=> setState(() =>()));
+    Future.delayed(const Duration(milliseconds: 500)).then((value)=> setState(() =>()));
+  }
+
   Future<bool> _onWillPop() async {
     if(await _controller.canGoBack()) {
       await _controller.goBack();
@@ -36,7 +43,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
       child: Scaffold(
         backgroundColor: GlobalColor.white,
         appBar: AppBar(
-          title: Text('홈페이지'),
+          title: Text('지구홈페이지'),
           centerTitle: true,
         ),
         body: WebViewWidget(controller: _controller),

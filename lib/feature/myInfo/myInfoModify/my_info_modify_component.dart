@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../util/global_color.dart';
@@ -7,9 +8,11 @@ class MyInfoModifyTextField extends ConsumerStatefulWidget {
   final String indexTitle;
   final TextEditingController indexController;
   final bool? multilineEnable;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   const MyInfoModifyTextField(
-      {super.key, required this.indexTitle, required this.indexController, this.multilineEnable});
+      {super.key, required this.indexTitle, required this.indexController, this.multilineEnable, this.inputFormatters, this.keyboardType});
 
   @override
   ConsumerState<MyInfoModifyTextField> createState() =>
@@ -23,9 +26,10 @@ class _MyInfoModifyTextField extends ConsumerState<MyInfoModifyTextField> {
       Text(widget.indexTitle, style: TextStyle(color: GlobalColor.darkGreyFontColor),),
       SizedBox(height: 5,),
       TextFormField(
+        inputFormatters: widget.inputFormatters,
         canRequestFocus: true,
           maxLines: (widget.multilineEnable?? false) ? null: 1,
-          keyboardType: (widget.multilineEnable?? false) ? TextInputType.multiline:null ,
+          keyboardType: widget.keyboardType ??((widget.multilineEnable?? false) ? TextInputType.multiline:null ),
           controller: widget.indexController,
           decoration: InputDecoration(
             hintText: "${widget.indexTitle}을(를) 입력해주세요",

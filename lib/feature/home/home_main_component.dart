@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rotary_flutter/main.dart';
 
 import '../../util/fontSize.dart';
 import '../../util/global_color.dart';
 
 class IndexText extends StatelessWidget {
-  final String text;
+  final String? text;
   final Color? textColor;
   final bool? overFlowFade;
 
@@ -17,11 +18,11 @@ class IndexText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text??'',
       style: TextStyle(
+        height: 20,
           fontSize: DynamicFontSize.font21(context),
           color: textColor ?? GlobalColor.black),
-
 
       overflow: overFlowFade??false ? TextOverflow.fade: null,
       maxLines: overFlowFade??false ? 1: null,
@@ -230,7 +231,7 @@ class CustomDropdown extends ConsumerWidget {
                           print('바꿀 값 ${entry.key}');
                           // ref.read(statusProvider.notifier).setStatus(entry.key);
                           onChanged(entry.key);
-                          context.pop(context); // 팝업 닫기
+                          Navigator.of(context, rootNavigator: true).pop();
                         },
                       );
                     }).toList(),
