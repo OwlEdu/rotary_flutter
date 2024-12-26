@@ -20,7 +20,6 @@ class IndexText extends StatelessWidget {
     return Text(
       text??'',
       style: TextStyle(
-        height: 20,
           fontSize: DynamicFontSize.font21(context),
           color: textColor ?? GlobalColor.black),
 

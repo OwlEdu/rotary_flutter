@@ -27,9 +27,7 @@ class _PresidentBirthScreen extends ConsumerState<PresidentBirthScreen> {
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
-              SearchBox(
-                hint: '검색어를 입력해주세요',
-              ),
+              SearchBox(hint: '검색어를 입력해주세요',),
               list.isNotEmpty
                   ? ListView.builder(itemBuilder: (context, index) {
                       return Placeholder();
